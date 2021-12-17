@@ -2,7 +2,7 @@ package WebAPI.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,55 +12,56 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import WebAPI.model.CuaHang;
-import WebAPI.repository.CuaHangRepository;
+import WebAPI.model.DonHang;
+import WebAPI.repository.DonHangRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/cuahang")
-public class CuaHangController {
+@RequestMapping("/api/donhang")
+public class DonHangController {
 	
 	@Autowired
-	CuaHangRepository repo;
+	DonHangRepository repo;
 	
-	@PostMapping("/them")
-	public ResponseEntity<CuaHang>ThemCuaHang(@RequestBody CuaHang cuahang) {
+	@PostMapping("/tao")
+	public ResponseEntity<DonHang>TaoDonHang(@RequestBody DonHang donhang) {
 		try {
-			CuaHang _cuahang = repo.save(new CuaHang(cuahang.getMach(), cuahang.getTench(),
-					cuahang.getSdt(), cuahang.getDiachi(), cuahang.getMakv(), cuahang.getMadt()));
+			DonHang _donhang = repo.save(new DonHang(donhang.getMadh(), donhang.getNgaytao(),
+					donhang.getTinhtrangdon(), donhang.getHinhthucthanhtoan(), donhang.getTongtien(),
+					donhang.getMakh(), donhang.getMach(), donhang.getMashipper(), donhang.getManvxl()));
 
-			return new ResponseEntity<>(_cuahang, HttpStatus.CREATED);
+			return new ResponseEntity<>(_donhang, HttpStatus.CREATED);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PutMapping("/sua/{id}")
-	public ResponseEntity<CuaHang> CapNhatCuaHang(@PathVariable("id") String id, @RequestBody CuaHang
-	cuahang) {
-		Optional<CuaHang> cuahangData = repo.findById(id);
-		if (cuahangData.isPresent()) {
-			CuaHang _cuahang = cuahangData.get();
-			_cuahang.setTench(cuahang.getTench());
-			_cuahang.setSdt(cuahang.getSdt());
-			_cuahang.setDiachi(cuahang.getDiachi());
-			_cuahang.setMakv(cuahang.getMakv());
-			_cuahang.setMadt(cuahang.getMadt());
+	/*@PutMapping("/sua/{id}")
+	public ResponseEntity<DonHang> CapNhatDonHang(@PathVariable("id") String id, @RequestBody DonHang
+	donhang) {
+		Optional<DonHang> donhangData = repo.findById(id);
+		if (donhangData.isPresent()) {
+			DonHang _donhang = donhangData.get();
+			_donhang.setTench(donhang.getTench());
+			_donhang.setSdt(donhang.getSdt());
+			_donhang.setDiachi(donhang.getDiachi());
+			_donhang.setMakv(donhang.getMakv());
+			_donhang.setMadt(donhang.getMadt());
 			return new ResponseEntity<>(repo.save(_cuahang), HttpStatus.OK);
 		} 
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
+	}*/
 	
 	@DeleteMapping("/xoa/{id}")
-	public ResponseEntity<HttpStatus> XoaMotCuaHang(@PathVariable("id") String id) {
+	public ResponseEntity<HttpStatus> XoaMotDonHang(@PathVariable("id") String id) {
 		try {
 			repo.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -71,7 +72,7 @@ public class CuaHangController {
 	}
 	
 	@DeleteMapping("/xoatatca")
-	public ResponseEntity<HttpStatus> XoaTatCaCuaHang() {
+	public ResponseEntity<HttpStatus> XoaTatCaDonHang() {
 		try {
 			repo.deleteAll();
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -82,29 +83,29 @@ public class CuaHangController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<List<CuaHang>> XemTatCaCuaHang() {
+	public ResponseEntity<List<DonHang>> XemTatCaDonHang() {
 		try {
-			List<CuaHang> cuahanglst = new ArrayList<CuaHang>();
-			repo.findAll().forEach(cuahanglst::add);
-			if (cuahanglst.isEmpty()) {
+			List<DonHang> donhanglst = new ArrayList<DonHang>();
+			repo.findAll().forEach(donhanglst::add);
+			if (donhanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<>(cuahanglst, HttpStatus.OK);
+			return new ResponseEntity<>(donhanglst, HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping("/tim/{ten}")
-	public ResponseEntity<List<CuaHang>> TimCuaHang(@PathVariable("ten") String ten) {
+	@GetMapping("/tim/{id}")
+	public ResponseEntity<List<DonHang>> TimDonHang(@PathVariable("id") String id) {
 		try {
-			List<CuaHang> cuahanglst = new ArrayList<CuaHang>();
-			repo.findAllwithName(ten).forEach(cuahanglst::add);
-			if (cuahanglst.isEmpty()) {
+			List<DonHang> donhanglst = new ArrayList<DonHang>();
+			repo.findAllwithId(id).forEach(donhanglst::add);
+			if (donhanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<>(cuahanglst, HttpStatus.OK);
+			return new ResponseEntity<>(donhanglst, HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
