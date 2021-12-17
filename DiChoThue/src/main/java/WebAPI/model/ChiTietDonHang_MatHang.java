@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ChiTietDonHang_MatHang {
 	@Id
 	private String madh;
-	@Id
 	private String mamh;
 	private int soluong;
 	
