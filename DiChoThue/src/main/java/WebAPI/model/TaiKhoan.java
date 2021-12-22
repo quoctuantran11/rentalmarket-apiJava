@@ -38,6 +38,29 @@ public class TaiKhoan {
 		taikhoanid = id;
 	}
 	
+	/*boolean TonTaiTaiKhoan(String name) {
+		if(this.Username == name) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	boolean XacThucTaiKhoan(String name, String pass) {
+		if(this.Username == name) {
+			if(this.Password == pass) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}*/
+	
 	public TaiKhoan(String id, String name, String pass, String type) {
 		super();
 		this.taikhoanid = id;

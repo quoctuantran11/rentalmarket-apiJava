@@ -2,7 +2,7 @@ package WebAPI.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Optional;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import WebAPI.model.DonHang;
 import WebAPI.repository.DonHangRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8000")
 @RestController
 @RequestMapping("/api/donhang")
 public class DonHangController {
@@ -42,23 +42,26 @@ public class DonHangController {
 		}
 	}
 	
-	/*@PutMapping("/sua/{id}")
+	@PutMapping("/sua/{id}")
 	public ResponseEntity<DonHang> CapNhatDonHang(@PathVariable("id") String id, @RequestBody DonHang
 	donhang) {
 		Optional<DonHang> donhangData = repo.findById(id);
 		if (donhangData.isPresent()) {
 			DonHang _donhang = donhangData.get();
-			_donhang.setTench(donhang.getTench());
-			_donhang.setSdt(donhang.getSdt());
-			_donhang.setDiachi(donhang.getDiachi());
-			_donhang.setMakv(donhang.getMakv());
-			_donhang.setMadt(donhang.getMadt());
-			return new ResponseEntity<>(repo.save(_cuahang), HttpStatus.OK);
+			_donhang.setNgaytao(donhang.getNgaytao());
+			_donhang.setTinhtrangdon(donhang.getTinhtrangdon());
+			_donhang.setHinhthucthanhtoan(donhang.getHinhthucthanhtoan());
+			_donhang.setTongtien(donhang.getTongtien());
+			_donhang.setMakh(donhang.getMakh());
+			_donhang.setMach(donhang.getMach());
+			_donhang.setMashipper(donhang.getMashipper());
+			_donhang.setManvxl(donhang.getManvxl());
+			return new ResponseEntity<>(repo.save(_donhang), HttpStatus.OK);
 		} 
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}*/
+	}
 	
 	@DeleteMapping("/xoa/{id}")
 	public ResponseEntity<HttpStatus> XoaMotDonHang(@PathVariable("id") String id) {
