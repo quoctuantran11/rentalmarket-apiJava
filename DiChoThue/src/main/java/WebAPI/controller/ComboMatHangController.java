@@ -2,7 +2,6 @@ package WebAPI.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,37 +11,36 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import WebAPI.model.CuaHang;
-import WebAPI.repository.CuaHangRepository;
+import WebAPI.model.ComboMatHang;
+import WebAPI.repository.ComboMatHangRepository;
 
 @CrossOrigin(origins = "http://localhost:8000")
 @RestController
-@RequestMapping("/api/cuahang")
-public class CuaHangController {
+@RequestMapping("/api/combo")
+public class ComboMatHangController {
 	
 	@Autowired
-	CuaHangRepository repo;
+	ComboMatHangRepository repo;
 	
 	@PostMapping("/them")
-	public ResponseEntity<CuaHang>ThemCuaHang(@RequestBody CuaHang cuahang) {
+	public ResponseEntity<ComboMatHang>ThemCombo(@RequestBody ComboMatHang combo) {
 		try {
-			CuaHang _cuahang = repo.save(new CuaHang(cuahang.getMach(), cuahang.getTench(),
-					cuahang.getSdt(), cuahang.getDiachi(), cuahang.getMakv(), cuahang.getMadt()));
+			ComboMatHang _combo = repo.save(new ComboMatHang(combo.getMacombo(), combo.getTencombo(),
+					combo.getSoluongton(), combo.getKhoiluong(), combo.getGia(), combo.getMach()));
 
-			return new ResponseEntity<>(_cuahang, HttpStatus.CREATED);
+			return new ResponseEntity<>(_combo, HttpStatus.CREATED);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PutMapping("/sua/{id}")
-	public ResponseEntity<CuaHang> CapNhatCuaHang(@PathVariable("id") String id, @RequestBody CuaHang
+	/*@PutMapping("/sua/{id}")
+	public ResponseEntity<MatHang> CapNhatCuaHang(@PathVariable("id") String id, @RequestBody CuaHang
 	cuahang) {
 		Optional<CuaHang> cuahangData = repo.findById(id);
 		if (cuahangData.isPresent()) {
@@ -57,10 +55,10 @@ public class CuaHangController {
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
+	}*/
 	
 	@DeleteMapping("/xoa/{id}")
-	public ResponseEntity<HttpStatus> XoaMotCuaHang(@PathVariable("id") String id) {
+	public ResponseEntity<HttpStatus> XoaMotCombo(@PathVariable("id") String id) {
 		try {
 			repo.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -71,7 +69,7 @@ public class CuaHangController {
 	}
 	
 	@DeleteMapping("/xoatatca")
-	public ResponseEntity<HttpStatus> XoaTatCaCuaHang() {
+	public ResponseEntity<HttpStatus> XoaTatCaCombo() {
 		try {
 			repo.deleteAll();
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -82,29 +80,14 @@ public class CuaHangController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<List<CuaHang>> XemTatCaCuaHang() {
+	public ResponseEntity<List<ComboMatHang>> XemTatCaCombo() {
 		try {
-			List<CuaHang> cuahanglst = new ArrayList<CuaHang>();
-			repo.findAll().forEach(cuahanglst::add);
-			if (cuahanglst.isEmpty()) {
+			List<ComboMatHang> combolst = new ArrayList<ComboMatHang>();
+			repo.findAll().forEach(combolst::add);
+			if (combolst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<>(cuahanglst, HttpStatus.OK);
-		}
-		catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@GetMapping("/tim/{ten}")
-	public ResponseEntity<List<CuaHang>> TimCuaHang(@PathVariable("ten") String ten) {
-		try {
-			List<CuaHang> cuahanglst = new ArrayList<CuaHang>();
-			repo.findAllwithName(ten).forEach(cuahanglst::add);
-			if (cuahanglst.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(cuahanglst, HttpStatus.OK);
+			return new ResponseEntity<>(combolst, HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

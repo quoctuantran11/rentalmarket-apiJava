@@ -10,8 +10,9 @@ public class MatHang {
 	private String ten;
 	private String xuatxu;
 	private int soluongton;
-	private int khoiluong;
+	private float khoiluong;
 	private int gia;
+	private String maloai;
 	private String mach;
 	
 	public String getMamh() {
@@ -46,11 +47,11 @@ public class MatHang {
 		this.soluongton = soluongton;
 	}
 	
-	public int getKhoiluong() {
+	public float getKhoiluong() {
 		return khoiluong;
 	}
 	
-	public void setKhoiluong(int khoiluong) {
+	public void setKhoiluong(float khoiluong) {
 		this.khoiluong = khoiluong;
 	}
 	
@@ -62,6 +63,14 @@ public class MatHang {
 		this.gia = gia;
 	}
 	
+	public String getMaloai() {
+		return maloai;
+	}
+	
+	public void setMaloai(String maloai) {
+		this.maloai = maloai;
+	}
+	
 	public String getMach() {
 		return mach;
 	}
@@ -70,7 +79,7 @@ public class MatHang {
 		this.mach = mach;
 	}
 	
-	public MatHang(String mamh, String ten, String xuatxu, int soluongton, int khoiluong, int gia, String mach) {
+	public MatHang(String mamh, String ten, String xuatxu, int soluongton, float khoiluong, int gia, String maloai, String mach) {
 		super();
 		this.mamh = mamh;
 		this.ten = ten;
@@ -78,6 +87,7 @@ public class MatHang {
 		this.soluongton = soluongton;
 		this.khoiluong = khoiluong;
 		this.gia = gia;
+		this.maloai = maloai;
 		this.mach = mach;
 	}
 	
