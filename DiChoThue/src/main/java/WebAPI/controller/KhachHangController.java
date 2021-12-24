@@ -17,28 +17,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import WebAPI.model.TaiKhoan;
-import WebAPI.repository.TaiKhoanRepository;
+import WebAPI.model.KhachHang;
+import WebAPI.repository.KhachHangRepository;
 
 @CrossOrigin(origins = "http://localhost:8000")
 @RestController
 @RequestMapping("/api")
-public class TaiKhoanController {
+public class KhachHangController {
 	
 	@Autowired
-	TaiKhoanRepository repo;
+	KhachHangRepository repo;
 	
 	//Create
 	@PostMapping("/registeraccount")
-	public ResponseEntity<TaiKhoan> RegisterAccount(@RequestBody TaiKhoan input) {
+	public ResponseEntity<KhachHang> RegisterAccount(@RequestBody KhachHang input) {
 		try {
-			Optional<TaiKhoan> taikhoanData = repo.TimUsername(input.getUsername());
-			if (taikhoanData.isPresent()) {
+			Optional<KhachHang> khachhangData = repo.TimUsername(input.getUsername());
+			if (khachhangData.isPresent()) {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);
 			}
 			else {
-				TaiKhoan tk = repo.save(new TaiKhoan(input.gettaikhoanid(), input.getUsername(), input.getPassword(), input.getLoaiTaiKhoan()));
-				return new ResponseEntity<>(tk, HttpStatus.CREATED);
+				KhachHang kh = repo.save(new KhachHang(input.getId(), input.getSdt(), input.getCccd(),
+						input.getDiachi(), input.getNgaysinh(), input.getGioitinh(),
+						input.getUsername(), input.getPassword(), input.getMakhuvuc(), input.getTen()));
+				return new ResponseEntity<>(kh, HttpStatus.CREATED);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,14 +49,29 @@ public class TaiKhoanController {
 	
 	//Read
 	@GetMapping("/accountlist")
-	public ResponseEntity<List<TaiKhoan>> AccountList() {
+	public ResponseEntity<List<KhachHang>> AccountList() {
 		try {
-			List<TaiKhoan> lst = new ArrayList<TaiKhoan>();
-			repo.findAll().forEach(lst::add);
-		if (lst.isEmpty()) {
+			List<KhachHang> accountlst = new ArrayList<KhachHang>();
+			repo.TimTatCaTaiKhoan().forEach(accountlst::add);
+		if (accountlst.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<>(lst, HttpStatus.OK);
+		return new ResponseEntity<>(accountlst, HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/khachhanglist")
+	public ResponseEntity<List<KhachHang>> KhachHangList() {
+		try {
+			List<KhachHang> khachhanglst = new ArrayList<KhachHang>();
+			repo.findAll().forEach(khachhanglst::add);
+		if (khachhanglst.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(khachhanglst, HttpStatus.OK);
 		} 
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,9 +106,9 @@ public class TaiKhoanController {
 		}
 	}
 	
-	@PutMapping("/editaccount/{id}")
-	public ResponseEntity<TaiKhoan> CapNhatTaiKhoan(@PathVariable("id") String id, @RequestBody TaiKhoan
-	taikhoan) {
+	/*@PutMapping("/editaccount/{id}")
+	public ResponseEntity<KhachHang> CapNhatThongTin(@PathVariable("id") String id, @RequestBody KhachHang
+	khachhang) {
 		Optional<TaiKhoan> taikhoanData = repo.findById(id);
 		if (taikhoanData.isPresent()) {
 			TaiKhoan _taikhoan = taikhoanData.get();
@@ -103,18 +120,18 @@ public class TaiKhoanController {
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
+	}*/
 	
 	@GetMapping("/login/{username}&{password}")
-	public ResponseEntity<Optional<TaiKhoan>> AccountLogin(@PathVariable("username") String username, 
+	public ResponseEntity<Optional<KhachHang>> AccountLogin(@PathVariable("username") String username, 
 			@PathVariable("password") String password){
 		try {
-			Optional<TaiKhoan> tk = repo.TimUsername(username);
-			if (tk.isPresent()) {
-				tk = repo.TimTaiKhoan(password);
+			Optional<KhachHang> kh = repo.TimUsername(username);
+			if (kh.isPresent()) {
+				kh = repo.TimTaiKhoan(password);
 				
-				if(tk.isPresent()) {
-					return new ResponseEntity<>(tk, HttpStatus.OK);
+				if(kh.isPresent()) {
+					return new ResponseEntity<>(kh, HttpStatus.OK);
 				}
 				else {
 					return new ResponseEntity<>(HttpStatus.NO_CONTENT);

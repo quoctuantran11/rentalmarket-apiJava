@@ -32,7 +32,8 @@ public class CuaHangController {
 	public ResponseEntity<CuaHang>ThemCuaHang(@RequestBody CuaHang cuahang) {
 		try {
 			CuaHang _cuahang = repo.save(new CuaHang(cuahang.getMach(), cuahang.getTench(),
-					cuahang.getSdt(), cuahang.getDiachi(), cuahang.getMakv(), cuahang.getMadt()));
+					cuahang.getSdt(), cuahang.getDiachi(), cuahang.getHinhanh(),
+					cuahang.getUsername(), cuahang.getPassword(), cuahang.getMakv(), cuahang.getMadt()));
 
 			return new ResponseEntity<>(_cuahang, HttpStatus.CREATED);
 		}
@@ -50,6 +51,9 @@ public class CuaHangController {
 			_cuahang.setTench(cuahang.getTench());
 			_cuahang.setSdt(cuahang.getSdt());
 			_cuahang.setDiachi(cuahang.getDiachi());
+			_cuahang.setHinhanh(cuahang.getHinhanh());
+			_cuahang.setUsername(cuahang.getUsername());
+			_cuahang.setPassword(cuahang.getPassword());
 			_cuahang.setMakv(cuahang.getMakv());
 			_cuahang.setMadt(cuahang.getMadt());
 			return new ResponseEntity<>(repo.save(_cuahang), HttpStatus.OK);

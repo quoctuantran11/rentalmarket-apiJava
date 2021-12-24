@@ -1,7 +1,5 @@
 package WebAPI.model;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,14 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DonHang {
 	@Id
 	private String madh;
-	private Date ngaytao;
-	private String tinhtrangdon;
-	private String hinhthucthanhtoan;
-	private int tongtien;
-	private String makh;
-	private String mach;
-	private String mashipper;
-	private String manvxl;
+	private String tinh_trang;
+	private String hinh_thuc_thanh_toan;
+	private int tong_tien;
+	private String dia_chi;
+	private String ma_khach_hang;
+	private String ma_cua_hang;
+	private String ma_shipper;
 	
 	public String getMadh() {
 		return madh;
@@ -26,82 +23,73 @@ public class DonHang {
 		this.madh = madh;
 	}
 	
-	public Date getNgaytao() {
-		return ngaytao;
-	}
-	
-	public void setNgaytao(Date ngaytao) {
-		this.ngaytao = ngaytao;
-	}
-	
 	public String getTinhtrangdon() {
-		return tinhtrangdon;
+		return tinh_trang;
 	}
 	
 	public void setTinhtrangdon(String tinhtrangdon) {
-		this.tinhtrangdon = tinhtrangdon;
+		this.tinh_trang = tinhtrangdon;
 	}
 	
 	public String getHinhthucthanhtoan() {
-		return hinhthucthanhtoan;
+		return hinh_thuc_thanh_toan;
 	}
 	
 	public void setHinhthucthanhtoan(String hinhthucthanhtoan) {
-		this.hinhthucthanhtoan = hinhthucthanhtoan;
+		this.hinh_thuc_thanh_toan = hinhthucthanhtoan;
 	}
 	
 	public int getTongtien() {
-		return tongtien;
+		return tong_tien;
 	}
 	
 	public void setTongtien(int tongtien) {
-		this.tongtien = tongtien;
+		this.tong_tien = tongtien;
+	}
+	
+	public String getDiachi() {
+		return dia_chi;
+	}
+	
+	public void setDiachi(String diachi) {
+		this.dia_chi = diachi;
 	}
 	
 	public String getMakh() {
-		return makh;
+		return ma_khach_hang;
 	}
 	
 	public void setMakh(String makh) {
-		this.makh = makh;
+		this.ma_khach_hang = makh;
 	}
 	
 	public String getMach() {
-		return mach;
+		return ma_cua_hang;
 	}
 	
 	public void setMach(String mach) {
-		this.mach = mach;
+		this.ma_cua_hang = mach;
 	}
 	
 	public String getMashipper() {
-		return mashipper;
+		return ma_shipper;
 	}
 	
 	public void setMashipper(String mashipper) {
-		this.mashipper = mashipper;
+		this.ma_shipper = mashipper;
 	}
 	
-	public String getManvxl() {
-		return manvxl;
-	}
-	
-	public void setManvxl(String manvxl) {
-		this.manvxl = manvxl;
-	}
-	
-	public DonHang(String madh, Date ngaytao, String tinhtrangdon, String hinhthucthanhtoan, int tongtien, 
-			String makh, String mach, String mashipper, String manvxl) {
+	public DonHang(String madh, String tinhtrangdon, String hinhthucthanhtoan, int tongtien, 
+			String diachi, String makh, String mach, String mashipper) {
 		super();
 		this.madh = madh;
-		this.ngaytao = ngaytao;
-		this.tinhtrangdon = tinhtrangdon;
-		this.hinhthucthanhtoan = hinhthucthanhtoan;
-		this.tongtien = tongtien;
-		this.makh = makh;
-		this.mach = mach;
-		this.mashipper = mashipper;
-		this.manvxl = manvxl;
+		this.tinh_trang = tinhtrangdon;
+		this.hinh_thuc_thanh_toan = hinhthucthanhtoan;
+		this.tong_tien = tongtien;
+		this.dia_chi = diachi;
+		this.ma_khach_hang = makh;
+		this.ma_cua_hang = mach;
+		this.ma_shipper = mashipper;
 	}
 	
 	public DonHang() {

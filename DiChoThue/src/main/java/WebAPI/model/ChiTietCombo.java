@@ -6,39 +6,49 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ChiTietCombo")
 public class ChiTietCombo {
 	@Id
-	private String macombo;
-	private String mamh;
-	private int soluong;
+	private String ma;
+	private String ma_combo;
+	private String ma_mat_hang;
+	private int so_luong;
+	
+	public String getMa() {
+		return ma;
+	}
+	
+	public void setMa(String ma) {
+		this.ma = ma;
+	}
 	
 	public String getMacombo() {
-		return macombo;
+		return ma_combo;
 	}
 	
 	public void setMacombo(String macombo) {
-		this.macombo = macombo;
+		this.ma_combo = macombo;
 	}
 	
 	public String getMamh() {
-		return mamh;
+		return ma_mat_hang;
 	}
 	
 	public void setMamh(String mamh) {
-		this.mamh = mamh;
+		this.ma_mat_hang = mamh;
 	}
 	
 	public int getSoluong() {
-		return soluong;
+		return so_luong;
 	}
 	
 	public void setSoluong(int soluong) {
-		this.soluong = soluong;
+		this.so_luong = soluong;
 	}
 	
-	public ChiTietCombo(String macombo, String mamh, int soluong) {
+	public ChiTietCombo(String ma, String macombo, String mamh, int soluong) {
 		super();
-		this.macombo = macombo;
-		this.mamh = mamh;
-		this.soluong = soluong;
+		this.ma = ma;
+		this.ma_combo = macombo;
+		this.ma_mat_hang = mamh;
+		this.so_luong = soluong;
 	}
 	
 	public ChiTietCombo() {

@@ -31,9 +31,9 @@ public class DonHangController {
 	@PostMapping("/tao")
 	public ResponseEntity<DonHang>TaoDonHang(@RequestBody DonHang donhang) {
 		try {
-			DonHang _donhang = repo.save(new DonHang(donhang.getMadh(), donhang.getNgaytao(),
-					donhang.getTinhtrangdon(), donhang.getHinhthucthanhtoan(), donhang.getTongtien(),
-					donhang.getMakh(), donhang.getMach(), donhang.getMashipper(), donhang.getManvxl()));
+			DonHang _donhang = repo.save(new DonHang(donhang.getMadh(), donhang.getTinhtrangdon(),
+					donhang.getHinhthucthanhtoan(), donhang.getTongtien(),
+					donhang.getDiachi(), donhang.getMakh(), donhang.getMach(), donhang.getMashipper()));
 
 			return new ResponseEntity<>(_donhang, HttpStatus.CREATED);
 		}
@@ -48,14 +48,13 @@ public class DonHangController {
 		Optional<DonHang> donhangData = repo.findById(id);
 		if (donhangData.isPresent()) {
 			DonHang _donhang = donhangData.get();
-			_donhang.setNgaytao(donhang.getNgaytao());
 			_donhang.setTinhtrangdon(donhang.getTinhtrangdon());
 			_donhang.setHinhthucthanhtoan(donhang.getHinhthucthanhtoan());
 			_donhang.setTongtien(donhang.getTongtien());
+			_donhang.setDiachi(donhang.getDiachi());
 			_donhang.setMakh(donhang.getMakh());
 			_donhang.setMach(donhang.getMach());
 			_donhang.setMashipper(donhang.getMashipper());
-			_donhang.setManvxl(donhang.getManvxl());
 			return new ResponseEntity<>(repo.save(_donhang), HttpStatus.OK);
 		} 
 		else {
