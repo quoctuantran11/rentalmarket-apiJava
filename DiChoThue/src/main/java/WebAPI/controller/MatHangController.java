@@ -2,7 +2,6 @@ package WebAPI.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Optional;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import WebAPI.model.HangHoaCuaHang;
 import WebAPI.model.MatHang;
 import WebAPI.repository.MatHangRepository;
 
@@ -92,6 +91,21 @@ public class MatHangController {
 		try {
 			List<MatHang> mathanglst = new ArrayList<MatHang>();
 			repo.findAll().forEach(mathanglst::add);
+			if (mathanglst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(mathanglst, HttpStatus.OK);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/{ten}")
+	public ResponseEntity<List<MatHang>> TimMatHang(@PathVariable("ten") String ten) {
+		try {
+			List<MatHang> mathanglst = new ArrayList<MatHang>();
+			repo.TimTheoTen(ten).forEach(mathanglst::add);
 			if (mathanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}

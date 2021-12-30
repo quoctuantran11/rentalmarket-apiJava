@@ -15,6 +15,6 @@ public interface KhachHangRepository extends MongoRepository<KhachHang, String> 
 	@Query("{password: ?0}")
 	Optional<KhachHang> TimTaiKhoan(String password);
 	
-	@Query("{'username' : 1, 'password' : 1}")
+	@Query(value="{}", fields="{'username' : 1, 'password' : 1}")
 	List<KhachHang> TimTatCaTaiKhoan();
 }

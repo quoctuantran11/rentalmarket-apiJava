@@ -99,19 +99,4 @@ public class CuaHangController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping("/tim/{ten}")
-	public ResponseEntity<List<CuaHang>> TimCuaHang(@PathVariable("ten") String ten) {
-		try {
-			List<CuaHang> cuahanglst = new ArrayList<CuaHang>();
-			repo.findAllwithName(ten).forEach(cuahanglst::add);
-			if (cuahanglst.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(cuahanglst, HttpStatus.OK);
-		}
-		catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 }

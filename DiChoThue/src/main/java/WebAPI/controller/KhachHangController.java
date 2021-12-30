@@ -53,10 +53,11 @@ public class KhachHangController {
 		try {
 			List<KhachHang> accountlst = new ArrayList<KhachHang>();
 			repo.TimTatCaTaiKhoan().forEach(accountlst::add);
-		if (accountlst.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(accountlst, HttpStatus.OK);
+			if (accountlst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		
+			return new ResponseEntity<>(accountlst, HttpStatus.OK);
 		} 
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,22 +79,6 @@ public class KhachHangController {
 		}
 	}
 	
-	/*@GetMapping("/accounttypelist/{type}")
-	public ResponseEntity<List<TaiKhoan>> AccountTypeList(@PathVariable("type") String type){
-		try {
-			List<TaiKhoan> lst = new ArrayList<TaiKhoan>();
-			repo.findAll(type).forEach(lst::add);
-			
-			if (lst.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(lst, HttpStatus.OK);
-		}
-		catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}*/
-	
 	//Delete
 	@DeleteMapping("/deleteallaccounts")
 	public ResponseEntity<HttpStatus> DeleteAllAccounts() {
@@ -106,21 +91,27 @@ public class KhachHangController {
 		}
 	}
 	
-	/*@PutMapping("/editaccount/{id}")
+	@PutMapping("/edit/{id}")
 	public ResponseEntity<KhachHang> CapNhatThongTin(@PathVariable("id") String id, @RequestBody KhachHang
 	khachhang) {
-		Optional<TaiKhoan> taikhoanData = repo.findById(id);
-		if (taikhoanData.isPresent()) {
-			TaiKhoan _taikhoan = taikhoanData.get();
-			_taikhoan.setUsername(taikhoan.getUsername());
-			_taikhoan.setPassword(taikhoan.getPassword());
-			_taikhoan.setLoaiTaiKhoan(taikhoan.getLoaiTaiKhoan());
-			return new ResponseEntity<>(repo.save(_taikhoan), HttpStatus.OK);
+		Optional<KhachHang> khachhangData = repo.findById(id);
+		if (khachhangData.isPresent()) {
+			KhachHang _khachhang = khachhangData.get();
+			_khachhang.setSdt(khachhang.getSdt());
+			_khachhang.setCccd(khachhang.getCccd());
+			_khachhang.setDiachi(khachhang.getDiachi());
+			_khachhang.setNgaysinh(khachhang.getNgaysinh());
+			_khachhang.setGioitinh(khachhang.getGioitinh());
+			_khachhang.setPassword(khachhang.getPassword());
+			_khachhang.setUsername(khachhang.getUsername());
+			_khachhang.setMakhuvuc(khachhang.getMakhuvuc());
+			_khachhang.setTen(khachhang.getTen());
+			return new ResponseEntity<>(repo.save(_khachhang), HttpStatus.OK);
 		} 
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}*/
+	}
 	
 	@GetMapping("/login/{username}&{password}")
 	public ResponseEntity<Optional<KhachHang>> AccountLogin(@PathVariable("username") String username, 
