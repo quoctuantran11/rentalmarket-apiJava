@@ -32,16 +32,10 @@ public class DoiTacController {
 	@PostMapping("/them")
 	public ResponseEntity<DoiTac> ThemDoiTac(@RequestBody DoiTac input) {
 		try {
-			/*Optional<DoiTac> doitacData = repo.TimUsername(input.getUsername());
-			if (khachhangData.isPresent()) {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-			else {*/
-				DoiTac dt = repo.save(new DoiTac(input.getId(), input.getSdt(), input.getCccd(),
-						input.getDiachi(), input.getLoaidoitac(), input.getTendoitac(),
-						input.getNgaythamgia(), input.getSoluongcuahang(), input.getTrangthai()));
-				return new ResponseEntity<>(dt, HttpStatus.CREATED);
-			//}
+			DoiTac dt = repo.save(new DoiTac(input.getId(), input.getSdt(), input.getCccd(),
+					input.getDiachi(), input.getLoaidoitac(), input.getTendoitac(),
+					input.getNgaythamgia(), input.getSoluongcuahang(), input.getTrangthai()));
+			return new ResponseEntity<>(dt, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

@@ -9,6 +9,9 @@ import WebAPI.model.DonHang;
 
 public interface DonHangRepository extends MongoRepository<DonHang, String> {
 	//CRUD
-	@Query("{makh:?0}")
-    List<DonHang>findAllwithId(String id);
+	@Query("{ma_khach_hang: ?0}")
+    List<DonHang>LichSuMuaHang(String id);
+	
+	@Query("{ma_shipper: ?0}")
+    List<DonHang>LichSuGiaoHang(String id);
 }

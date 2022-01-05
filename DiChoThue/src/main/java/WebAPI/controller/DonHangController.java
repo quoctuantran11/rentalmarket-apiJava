@@ -99,11 +99,26 @@ public class DonHangController {
 		}
 	}
 	
-	@GetMapping("/tim/{id}")
-	public ResponseEntity<List<DonHang>> TimDonHang(@PathVariable("id") String id) {
+	@GetMapping("/lichsumua/{id}")
+	public ResponseEntity<List<DonHang>> DonHangDaMua(@PathVariable("id") String id) {
 		try {
 			List<DonHang> donhanglst = new ArrayList<DonHang>();
-			repo.findAllwithId(id).forEach(donhanglst::add);
+			repo.LichSuMuaHang(id).forEach(donhanglst::add);
+			if (donhanglst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(donhanglst, HttpStatus.OK);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/lichsugiao/{id}")
+	public ResponseEntity<List<DonHang>> DonHangDaGiao(@PathVariable("id") String id) {
+		try {
+			List<DonHang> donhanglst = new ArrayList<DonHang>();
+			repo.LichSuGiaoHang(id).forEach(donhanglst::add);
 			if (donhanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}

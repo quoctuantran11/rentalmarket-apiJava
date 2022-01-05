@@ -99,4 +99,44 @@ public class CuaHangController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/danhsachtaikhoan")
+	public ResponseEntity<List<CuaHang>> AccountList() {
+		try {
+			List<CuaHang> accountlst = new ArrayList<CuaHang>();
+			repo.DanhSachTaiKhoan().forEach(accountlst::add);
+			if (accountlst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		
+			return new ResponseEntity<>(accountlst, HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/login/{username}&{password}")
+	public ResponseEntity<Optional<CuaHang>> AccountLogin(@PathVariable("username") String username, 
+			@PathVariable("password") String password){
+		try {
+			Optional<CuaHang> ch = repo.TimUsername(username);
+			if (ch.isPresent()) {
+				ch = repo.TimTaiKhoan(password);
+				
+				if(ch.isPresent()) {
+					return new ResponseEntity<>(ch, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+			}
+			else {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
