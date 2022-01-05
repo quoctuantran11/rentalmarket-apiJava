@@ -7,11 +7,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CuaHang {
 	@Id
 	private String mach;
-	private String tench;
+	private String ten_cua_hang;
 	private String sdt;
-	private String diachi;
-	private String makv;
-	private String madt;
+	private String dia_chi;
+	private String hinh_anh;
+	private String username;
+	private String password;
+	private String ma_khu_vuc;
+	private String ma_doi_tac;
 	
 	public String getMach() {
 		return mach;
@@ -22,11 +25,11 @@ public class CuaHang {
 	}
 	
 	public String getTench() {
-		return tench;
+		return ten_cua_hang;
 	}
 	
 	public void setTench(String tench) {
-		this.tench = tench;
+		this.ten_cua_hang = tench;
 	}
 	
 	public String getSdt() {
@@ -38,37 +41,65 @@ public class CuaHang {
 	}
 	
 	public String getDiachi() {
-		return diachi;
+		return dia_chi;
 	}
 	
 	public void setDiachi(String diachi) {
-		this.diachi = diachi;
+		this.dia_chi = diachi;
+	}
+	
+	public String getHinhanh() {
+		return hinh_anh;
+	}
+	
+	public void setHinhanh(String hinhanh) {
+		this.hinh_anh = hinhanh;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public String getMakv() {
-		return makv;
+		return ma_khu_vuc;
 	}
 	
 	public void setMakv(String makv) {
-		this.makv = makv;
+		this.ma_khu_vuc = makv;
 	}
 	
 	public String getMadt() {
-		return madt;
+		return ma_doi_tac;
 	}
 	
 	public void setMadt(String madt) {
-		this.madt = madt;
+		this.ma_doi_tac = madt;
 	}
 	
-	public CuaHang(String mach, String tench, String sdt, String diachi, String makv, String madt) {
+	public CuaHang(String mach, String tench, String sdt, String diachi,
+			String hinhanh, String username, String password, String makv, String madt) {
 		super();
 		this.mach = mach;
-		this.tench = tench;
+		this.ten_cua_hang = tench;
 		this.sdt = sdt;
-		this.diachi = diachi;
-		this.makv = makv;
-		this.madt = madt;
+		this.dia_chi = diachi;
+		this.hinh_anh = hinhanh;
+		this.username = username;
+		this.password = password;
+		this.ma_khu_vuc = makv;
+		this.ma_doi_tac = madt;
 	}
 	
 	public CuaHang() {

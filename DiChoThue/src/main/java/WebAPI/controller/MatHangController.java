@@ -2,7 +2,7 @@ package WebAPI.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Optional;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +33,7 @@ public class MatHangController {
 		try {
 			MatHang _mathang = repo.save(new MatHang(mathang.getMamh(), mathang.getTen(),
 					mathang.getXuatxu(), mathang.getSoluongton(), mathang.getKhoiluong(),
-					mathang.getGia(), mathang.getMaloai(), mathang.getMach()));
+					mathang.getHinhanh(), mathang.getGia(), mathang.getLoaimathang(), mathang.getMach()));
 
 			return new ResponseEntity<>(_mathang, HttpStatus.CREATED);
 		}
@@ -42,23 +42,26 @@ public class MatHangController {
 		}
 	}
 	
-	/*@PutMapping("/sua/{id}")
-	public ResponseEntity<MatHang> CapNhatCuaHang(@PathVariable("id") String id, @RequestBody CuaHang
-	cuahang) {
-		Optional<CuaHang> cuahangData = repo.findById(id);
-		if (cuahangData.isPresent()) {
-			CuaHang _cuahang = cuahangData.get();
-			_cuahang.setTench(cuahang.getTench());
-			_cuahang.setSdt(cuahang.getSdt());
-			_cuahang.setDiachi(cuahang.getDiachi());
-			_cuahang.setMakv(cuahang.getMakv());
-			_cuahang.setMadt(cuahang.getMadt());
-			return new ResponseEntity<>(repo.save(_cuahang), HttpStatus.OK);
+	@PutMapping("/sua/{id}")
+	public ResponseEntity<MatHang> CapNhatMatHang(@PathVariable("id") String id, @RequestBody MatHang
+	mathang) {
+		Optional<MatHang> mathangData = repo.findById(id);
+		if (mathangData.isPresent()) {
+			MatHang _mathang = mathangData.get();
+			_mathang.setTen(mathang.getTen());
+			_mathang.setXuatxu(mathang.getXuatxu());
+			_mathang.setSoluongton(mathang.getSoluongton());
+			_mathang.setKhoiluong(mathang.getKhoiluong());
+			_mathang.setHinhanh(mathang.getHinhanh());
+			_mathang.setGia(mathang.getGia());
+			_mathang.setLoaimathang(mathang.getLoaimathang());
+			_mathang.setMach(mathang.getMach());
+			return new ResponseEntity<>(repo.save(_mathang), HttpStatus.OK);
 		} 
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}*/
+	}
 	
 	@DeleteMapping("/xoa/{id}")
 	public ResponseEntity<HttpStatus> XoaMotMatHang(@PathVariable("id") String id) {
@@ -87,6 +90,21 @@ public class MatHangController {
 		try {
 			List<MatHang> mathanglst = new ArrayList<MatHang>();
 			repo.findAll().forEach(mathanglst::add);
+			if (mathanglst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(mathanglst, HttpStatus.OK);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/{ten}")
+	public ResponseEntity<List<MatHang>> TimMatHang(@PathVariable("ten") String ten) {
+		try {
+			List<MatHang> mathanglst = new ArrayList<MatHang>();
+			repo.TimTheoTen(ten).forEach(mathanglst::add);
 			if (mathanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}

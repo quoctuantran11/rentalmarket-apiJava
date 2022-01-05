@@ -31,9 +31,9 @@ public class DonHangController {
 	@PostMapping("/tao")
 	public ResponseEntity<DonHang>TaoDonHang(@RequestBody DonHang donhang) {
 		try {
-			DonHang _donhang = repo.save(new DonHang(donhang.getMadh(), donhang.getNgaytao(),
-					donhang.getTinhtrangdon(), donhang.getHinhthucthanhtoan(), donhang.getTongtien(),
-					donhang.getMakh(), donhang.getMach(), donhang.getMashipper(), donhang.getManvxl()));
+			DonHang _donhang = repo.save(new DonHang(donhang.getMadh(), donhang.getTinhtrangdon(),
+					donhang.getHinhthucthanhtoan(), donhang.getTongtien(),
+					donhang.getDiachi(), donhang.getMakh(), donhang.getMach(), donhang.getMashipper()));
 
 			return new ResponseEntity<>(_donhang, HttpStatus.CREATED);
 		}
@@ -48,14 +48,13 @@ public class DonHangController {
 		Optional<DonHang> donhangData = repo.findById(id);
 		if (donhangData.isPresent()) {
 			DonHang _donhang = donhangData.get();
-			_donhang.setNgaytao(donhang.getNgaytao());
 			_donhang.setTinhtrangdon(donhang.getTinhtrangdon());
 			_donhang.setHinhthucthanhtoan(donhang.getHinhthucthanhtoan());
 			_donhang.setTongtien(donhang.getTongtien());
+			_donhang.setDiachi(donhang.getDiachi());
 			_donhang.setMakh(donhang.getMakh());
 			_donhang.setMach(donhang.getMach());
 			_donhang.setMashipper(donhang.getMashipper());
-			_donhang.setManvxl(donhang.getManvxl());
 			return new ResponseEntity<>(repo.save(_donhang), HttpStatus.OK);
 		} 
 		else {
@@ -100,11 +99,26 @@ public class DonHangController {
 		}
 	}
 	
-	@GetMapping("/tim/{id}")
-	public ResponseEntity<List<DonHang>> TimDonHang(@PathVariable("id") String id) {
+	@GetMapping("/lichsumua/{id}")
+	public ResponseEntity<List<DonHang>> DonHangDaMua(@PathVariable("id") String id) {
 		try {
 			List<DonHang> donhanglst = new ArrayList<DonHang>();
-			repo.findAllwithId(id).forEach(donhanglst::add);
+			repo.LichSuMuaHang(id).forEach(donhanglst::add);
+			if (donhanglst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(donhanglst, HttpStatus.OK);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/lichsugiao/{id}")
+	public ResponseEntity<List<DonHang>> DonHangDaGiao(@PathVariable("id") String id) {
+		try {
+			List<DonHang> donhanglst = new ArrayList<DonHang>();
+			repo.LichSuGiaoHang(id).forEach(donhanglst::add);
 			if (donhanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
