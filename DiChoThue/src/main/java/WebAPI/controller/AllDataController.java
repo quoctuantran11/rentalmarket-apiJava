@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import WebAPI.model.ComboMatHang;
+import WebAPI.model.NhanVien;
 import WebAPI.model.CuaHang;
 import WebAPI.model.DonHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.MatHang;
-import WebAPI.services.HangHoaCuaHangServices;
+import WebAPI.services.AllDataServices;
 
 @CrossOrigin(origins = "http://localhost:8000")
 @RestController
 @RequestMapping("/api")
-public class HangHoaCuaHangController {
-	
+public class AllDataController {
+
 	@Autowired
-	HangHoaCuaHangServices hanghoaCuaHang;
+	AllDataServices allData;
 	
 	//Show
 	@GetMapping("/hanghoa")
@@ -37,11 +38,11 @@ public class HangHoaCuaHangController {
 		try {
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 		
-			List<MatHang> mathanglst = hanghoaCuaHang.LayTatCaHang();
+			List<MatHang> mathanglst = allData.LayTatCaHang();
 			mathanglst.forEach(mathang -> {
 				Map<String, Object> item = new HashMap();
 				item.put("MatHang", mathang);
-				Optional<CuaHang> cuahang = hanghoaCuaHang.LayTenCuaHang(mathang.getMach());
+				Optional<CuaHang> cuahang = allData.LayTenCuaHang(mathang.getMach());
 				item.put("CuaHang", cuahang);
 				
 				itemlst.add(item);
@@ -60,11 +61,11 @@ public class HangHoaCuaHangController {
 		try {
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 		
-			List<MatHang> mathanglst = hanghoaCuaHang.TimTatCaHang(ten);
+			List<MatHang> mathanglst = allData.TimTatCaHang(ten);
 			mathanglst.forEach(mathang -> {
 				Map<String, Object> item = new HashMap();
 				item.put("MatHang", mathang);
-				Optional<CuaHang> cuahang = hanghoaCuaHang.LayTenCuaHang(mathang.getMach());
+				Optional<CuaHang> cuahang = allData.LayTenCuaHang(mathang.getMach());
 				item.put("CuaHang", cuahang);
 				
 				itemlst.add(item);
@@ -83,11 +84,11 @@ public class HangHoaCuaHangController {
 		try {
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 		
-			List<ComboMatHang> combolst = hanghoaCuaHang.LayTatCaCombo();
+			List<ComboMatHang> combolst = allData.LayTatCaCombo();
 			combolst.forEach(combo -> {
 				Map<String, Object> item = new HashMap();
 				item.put("Combo", combo);
-				Optional<CuaHang> tencuahang = hanghoaCuaHang.LayTenCuaHang(combo.getMach());
+				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(combo.getMach());
 				item.put("CuaHang", tencuahang);
 				
 				itemlst.add(item);
@@ -106,12 +107,14 @@ public class HangHoaCuaHangController {
 		try {
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 		
-			List<DonHang> donhanglst = hanghoaCuaHang.DanhSachGiaoHang("61c3d5ff0296576ff58de98f");
+			List<DonHang> donhanglst = allData.DanhSachGiaoHang("61c3d5ff0296576ff58de98f");
 			donhanglst.forEach(donhang -> {
 				Map<String, Object> item = new HashMap();
 				item.put("DonHang", donhang);
-				String tenkhachhang = hanghoaCuaHang.TenKhachHang(donhang.getMakh());
+				Optional<KhachHang> tenkhachhang = allData.TenKhachHang(donhang.getMakh());
 				item.put("KhachHang", tenkhachhang);
+				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(donhang.getMach());
+				item.put("CuaHang", tencuahang);
 				
 				itemlst.add(item);
 			});
@@ -122,4 +125,29 @@ public class HangHoaCuaHangController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/khachhang/lichsu")
+	public ResponseEntity<List<Map<String, Object>>> LichSuMuaHang()
+	{
+		try {
+			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
+		
+			List<DonHang> donhanglst = allData.DanhSachMuaHang("61c3d5ff0296576ff58de98f");
+			donhanglst.forEach(donhang -> {
+				Map<String, Object> item = new HashMap();
+				item.put("DonHang", donhang);
+				Optional<NhanVien> tenshipper = allData.TenShipper(donhang.getMashipper());
+				item.put("Shipper", tenshipper);
+				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(donhang.getMach());
+				item.put("CuaHang", tencuahang);
+				
+				itemlst.add(item);
+			});
+			return new ResponseEntity<>(itemlst, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}	
 }

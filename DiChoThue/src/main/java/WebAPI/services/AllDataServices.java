@@ -11,15 +11,16 @@ import WebAPI.model.CuaHang;
 import WebAPI.model.DonHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.MatHang;
+import WebAPI.model.NhanVien;
 import WebAPI.repository.ComboMatHangRepository;
 import WebAPI.repository.CuaHangRepository;
 import WebAPI.repository.DonHangRepository;
 import WebAPI.repository.KhachHangRepository;
 import WebAPI.repository.MatHangRepository;
+import WebAPI.repository.NhanVienRepository;
 
-@Service("HangHoaCuaHang")
-public class HangHoaCuaHangServices {
-	
+@Service("AllData")
+public class AllDataServices {
 	@Autowired
 	MatHangRepository mathangrepo;
 	
@@ -34,6 +35,9 @@ public class HangHoaCuaHangServices {
 	
 	@Autowired
 	DonHangRepository donhangrepo;
+	
+	@Autowired
+	NhanVienRepository shipperrepo;
 	
 	public List<MatHang> LayTatCaHang()
 	{
@@ -60,13 +64,23 @@ public class HangHoaCuaHangServices {
 		return comborepo.findAll();
 	}
 	
-	public String TenKhachHang(String id)
+	public Optional<KhachHang> TenKhachHang(String id)
 	{
 		return khachhangrepo.getTenKhachHang(id);
+	}
+	
+	public Optional<NhanVien> TenShipper(String id)
+	{
+		return shipperrepo.getTenShippper(id);
 	}
 	
 	public List<DonHang> DanhSachGiaoHang(String id)
 	{
 		return donhangrepo.LichSuGiaoHang(id);
+	}
+	
+	public List<DonHang> DanhSachMuaHang(String id)
+	{
+		return donhangrepo.LichSuMuaHang(id);
 	}
 }
