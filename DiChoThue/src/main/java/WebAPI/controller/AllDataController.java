@@ -149,5 +149,53 @@ public class AllDataController {
 		{
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping("/quanlytaikhoan")
+	public ResponseEntity<Map<String, Object>> QuanLyTaiKhoan()
+	{
+		try {
+			Map<String, Object> item = new HashMap();
+			
+			List<KhachHang> customerlst = allData.TaiKhoanKH();
+			item.put("KhachHang", customerlst);
+			List<NhanVien> shipperlst = allData.TaiKhoanNV();
+			item.put("Shipper", shipperlst);
+			List<CuaHang> storelst = allData.TaiKhoanCH();
+			item.put("CuaHang", storelst);
+			
+			return new ResponseEntity<>(item, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/tatcadon")
+	public ResponseEntity<List<Map<String, Object>>> DanhSachDonHang()
+	{
+		try {
+			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
+			List<DonHang> donhanglst = allData.TatCaDonHang();
+			donhanglst.forEach(donhang -> {
+				Map<String, Object> item = new HashMap();
+				item.put("DonHang", donhang);
+				Optional<NhanVien> tenshipper = allData.TenShipper(donhang.getMashipper());
+				item.put("Shipper", tenshipper);
+				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(donhang.getMach());
+				item.put("CuaHang", tencuahang);
+				Optional<KhachHang> tenkhachhang = allData.TenKhachHang(donhang.getMakh());
+				item.put("KhachHang", tenkhachhang);
+				
+				itemlst.add(item);
+			});
+			
+			return new ResponseEntity<>(itemlst, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}	
 }

@@ -53,7 +53,7 @@ public class NhanVienController {
 		public ResponseEntity<List<NhanVien>> AccountList() {
 			try {
 				List<NhanVien> accountlst = new ArrayList<NhanVien>();
-				repo.TimTatCaTaiKhoan().forEach(accountlst::add);
+				repo.TatCaTaiKhoan().forEach(accountlst::add);
 				if (accountlst.isEmpty()) {
 					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 				}
@@ -65,7 +65,7 @@ public class NhanVienController {
 			}
 		}
 		
-		@GetMapping("/shipperlist")
+		@GetMapping("/list")
 		public ResponseEntity<List<NhanVien>> ShipperList() {
 			try {
 				List<NhanVien> shipperlst = new ArrayList<NhanVien>();
