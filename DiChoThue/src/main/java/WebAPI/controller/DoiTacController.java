@@ -42,7 +42,7 @@ public class DoiTacController {
 	}
 	
 	//Read
-	@GetMapping("/danhsach")
+	@GetMapping()
 	public ResponseEntity<List<DoiTac>> DanhSachDoiTac() {
 		try {
 			List<DoiTac> doitaclst = new ArrayList<DoiTac>();
@@ -69,7 +69,7 @@ public class DoiTacController {
 		}
 	}
 	
-	@PutMapping("/editaccount/{id}")
+	@PutMapping("/sua/{id}")
 	public ResponseEntity<DoiTac> CapNhatThongTin(@PathVariable("id") String id, @RequestBody DoiTac
 	doitac) {
 		Optional<DoiTac> doitacData = repo.findById(id);

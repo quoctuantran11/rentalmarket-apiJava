@@ -29,7 +29,7 @@ public class KhachHangController {
 	KhachHangRepository repo;
 	
 	//Create
-	@PostMapping("/registeraccount")
+	@PostMapping("/customer/registeraccount")
 	public ResponseEntity<KhachHang> RegisterAccount(@RequestBody KhachHang input) {
 		try {
 			Optional<KhachHang> khachhangData = repo.TimUsername(input.getUsername());
@@ -86,6 +86,17 @@ public class KhachHangController {
 			repo.deleteAll();
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@DeleteMapping("/xoa/{id}")
+	public ResponseEntity<HttpStatus> XoaMotKhachHang(@PathVariable("id") String id) {
+		try {
+			repo.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

@@ -83,4 +83,24 @@ public class AllDataServices {
 	{
 		return donhangrepo.LichSuMuaHang(id);
 	}
+	
+	public List<DonHang> TatCaDonHang()
+	{
+		return donhangrepo.findAll();
+	}
+	
+	public List<KhachHang> TaiKhoanKH()
+	{
+		return khachhangrepo.TimTatCaTaiKhoan();
+	}
+	
+	public List<NhanVien> TaiKhoanNV()
+	{
+		return shipperrepo.TatCaTaiKhoan();
+	}
+	
+	public List<CuaHang> TaiKhoanCH()
+	{
+		return cuahangrepo.DanhSachTaiKhoan();
+	}
 }
