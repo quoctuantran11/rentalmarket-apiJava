@@ -100,6 +100,20 @@ public class CuaHangController {
 		}
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<Optional<CuaHang>> TimCuaHang(@PathVariable("id") String id) {
+		try {
+			Optional<CuaHang> cuahangData = repo.findById(id);
+			if (cuahangData.isPresent()) {
+				return new ResponseEntity<>(cuahangData, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@GetMapping("/danhsachtaikhoan")
 	public ResponseEntity<List<CuaHang>> AccountList() {
 		try {
