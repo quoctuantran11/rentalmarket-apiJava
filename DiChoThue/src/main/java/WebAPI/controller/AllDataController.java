@@ -42,7 +42,7 @@ public class AllDataController {
 			mathanglst.forEach(mathang -> {
 				Map<String, Object> item = new HashMap();
 				item.put("MatHang", mathang);
-				Optional<CuaHang> cuahang = allData.LayTenCuaHang(mathang.getMach());
+				Optional<CuaHang> cuahang = allData.LayCuaHang(mathang.getMach());
 				item.put("CuaHang", cuahang);
 				
 				itemlst.add(item);
@@ -65,7 +65,7 @@ public class AllDataController {
 			mathanglst.forEach(mathang -> {
 				Map<String, Object> item = new HashMap();
 				item.put("MatHang", mathang);
-				Optional<CuaHang> cuahang = allData.LayTenCuaHang(mathang.getMach());
+				Optional<CuaHang> cuahang = allData.LayCuaHang(mathang.getMach());
 				item.put("CuaHang", cuahang);
 				
 				itemlst.add(item);
@@ -88,7 +88,7 @@ public class AllDataController {
 			combolst.forEach(combo -> {
 				Map<String, Object> item = new HashMap();
 				item.put("Combo", combo);
-				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(combo.getMach());
+				Optional<CuaHang> tencuahang = allData.LayCuaHang(combo.getMach());
 				item.put("CuaHang", tencuahang);
 				
 				itemlst.add(item);
@@ -113,7 +113,7 @@ public class AllDataController {
 				item.put("DonHang", donhang);
 				Optional<KhachHang> tenkhachhang = allData.TenKhachHang(donhang.getMakh());
 				item.put("KhachHang", tenkhachhang);
-				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(donhang.getMach());
+				Optional<CuaHang> tencuahang = allData.LayCuaHang(donhang.getMach());
 				item.put("CuaHang", tencuahang);
 				
 				itemlst.add(item);
@@ -138,7 +138,7 @@ public class AllDataController {
 				item.put("DonHang", donhang);
 				Optional<NhanVien> tenshipper = allData.TenShipper(donhang.getMashipper());
 				item.put("Shipper", tenshipper);
-				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(donhang.getMach());
+				Optional<CuaHang> tencuahang = allData.LayCuaHang(donhang.getMach());
 				item.put("CuaHang", tencuahang);
 				
 				itemlst.add(item);
@@ -183,7 +183,7 @@ public class AllDataController {
 				item.put("DonHang", donhang);
 				Optional<NhanVien> tenshipper = allData.TenShipper(donhang.getMashipper());
 				item.put("Shipper", tenshipper);
-				Optional<CuaHang> tencuahang = allData.LayTenCuaHang(donhang.getMach());
+				Optional<CuaHang> tencuahang = allData.LayCuaHang(donhang.getMach());
 				item.put("CuaHang", tencuahang);
 				Optional<KhachHang> tenkhachhang = allData.TenKhachHang(donhang.getMakh());
 				item.put("KhachHang", tenkhachhang);

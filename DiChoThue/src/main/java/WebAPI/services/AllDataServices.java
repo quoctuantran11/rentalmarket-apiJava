@@ -47,16 +47,11 @@ public class AllDataServices {
 	public List<MatHang> TimTatCaHang(String name)
 	{
 		return mathangrepo.TimTheoTen(name);
-	} 
+	}
 	
 	public Optional<CuaHang> LayCuaHang(String id)
 	{
-		return cuahangrepo.findById(id);
-	}
-	
-	public Optional<CuaHang> LayTenCuaHang(String id)
-	{
-		return cuahangrepo.getTenCuaHang(id);
+		return cuahangrepo.getCuaHang(id);
 	}
 	
 	public List<ComboMatHang> LayTatCaCombo()
