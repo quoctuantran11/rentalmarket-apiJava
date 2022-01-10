@@ -19,6 +19,7 @@ import WebAPI.model.ComboMatHang;
 import WebAPI.model.NhanVien;
 import WebAPI.model.CuaHang;
 import WebAPI.model.DonHang;
+import WebAPI.model.GioHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.MatHang;
 import WebAPI.services.AllDataServices;
@@ -197,5 +198,29 @@ public class AllDataController {
 		{
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}	
+	}
+	
+	
+	
+	@GetMapping("/tatcagiohang")
+	public ResponseEntity<List<Map<String, Object>>> DanhSachTatCaGioHang()
+	{
+		try {
+			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
+			List<GioHang> giohanglst = allData.TatCaGioHang();
+			giohanglst.forEach(giohang -> {
+				Map<String, Object> item = new HashMap();
+				item.put("GioHang", giohang);
+				Optional<MatHang> tenmathang = allData.TenMatHang(giohang.getMa_mat_hang());
+				item.put("MatHang", tenmathang);
+				itemlst.add(item);
+			});
+			
+			return new ResponseEntity<>(itemlst, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

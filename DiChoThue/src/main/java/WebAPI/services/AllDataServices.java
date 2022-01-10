@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import WebAPI.model.ComboMatHang;
 import WebAPI.model.CuaHang;
 import WebAPI.model.DonHang;
+import WebAPI.model.GioHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.MatHang;
 import WebAPI.model.NhanVien;
 import WebAPI.repository.ComboMatHangRepository;
 import WebAPI.repository.CuaHangRepository;
 import WebAPI.repository.DonHangRepository;
+import WebAPI.repository.GioHangRepository;
 import WebAPI.repository.KhachHangRepository;
 import WebAPI.repository.MatHangRepository;
 import WebAPI.repository.NhanVienRepository;
@@ -38,6 +40,9 @@ public class AllDataServices {
 	
 	@Autowired
 	NhanVienRepository shipperrepo;
+	
+	@Autowired
+	GioHangRepository giohangrepo;
 	
 	public List<MatHang> LayTatCaHang()
 	{
@@ -69,6 +74,11 @@ public class AllDataServices {
 		return shipperrepo.getTenShippper(id);
 	}
 	
+	public Optional<MatHang> TenMatHang(String id)
+	{
+		return mathangrepo.getTenMatHang(id);
+	}
+	
 	public List<DonHang> DanhSachGiaoHang(String id)
 	{
 		return donhangrepo.LichSuGiaoHang(id);
@@ -97,5 +107,15 @@ public class AllDataServices {
 	public List<CuaHang> TaiKhoanCH()
 	{
 		return cuahangrepo.DanhSachTaiKhoan();
+	}
+	
+	public List<GioHang> TatCaGioHang()
+	{
+		return giohangrepo.XemTatCaGioHang();
+	}
+	
+	public List<GioHang> GioHangTheoID(String id) 
+	{
+		return giohangrepo.TimTheoID(id);
 	}
 }
