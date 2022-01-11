@@ -1,6 +1,7 @@
 package WebAPI.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -17,5 +18,8 @@ public interface MatHangRepository extends MongoRepository<MatHang, String> {
 	@Query(value="{}", fields="{'ten_mat_hang' : 1, 'khoi_luong' : 1,"
 			+ "'gia_ban' : 1, 'ma_cua_hang' : 1}")
 	List<MatHang> Xem();
+	
+	@Query(value="{mamh: ?0}", fields="{'ten_mat_hang' : 1, 'mamh': 0}")
+	Optional<MatHang> getTenMatHang(String id);
 }
 
