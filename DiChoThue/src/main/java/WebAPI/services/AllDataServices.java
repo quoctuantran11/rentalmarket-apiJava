@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import WebAPI.model.ChiTietGioHang;
 import WebAPI.model.ComboMatHang;
 import WebAPI.model.CuaHang;
 import WebAPI.model.DonHang;
@@ -20,6 +21,8 @@ import WebAPI.repository.GioHangRepository;
 import WebAPI.repository.KhachHangRepository;
 import WebAPI.repository.MatHangRepository;
 import WebAPI.repository.NhanVienRepository;
+import WebAPI.repository.ChiTietGioHangRepository;
+
 
 @Service("AllData")
 public class AllDataServices {
@@ -43,6 +46,9 @@ public class AllDataServices {
 	
 	@Autowired
 	GioHangRepository giohangrepo;
+	
+	@Autowired
+	ChiTietGioHangRepository chitietgiohangrepo;
 	
 	public List<MatHang> LayTatCaHang()
 	{
@@ -118,4 +124,20 @@ public class AllDataServices {
 	{
 		return giohangrepo.TimTheoID(id);
 	}
+	
+	public List<GioHang> GioHangTheoMaKH(String id) 
+	{
+		return giohangrepo.TimTheoMaKH(id);
+	}
+	
+	public GioHang MotGioHangTheoMaKH(String id) 
+	{
+		return giohangrepo.MotGHTimTheoMaKH(id);
+	}
+	
+	public List<ChiTietGioHang> LayChiTietTheoGioHang(String id) 
+	{
+		return chitietgiohangrepo.TimTheoMaGioHang(id);
+	}
+	
 }
