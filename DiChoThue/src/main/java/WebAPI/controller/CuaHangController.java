@@ -31,19 +31,11 @@ public class CuaHangController {
 	@PostMapping("/them")
 	public ResponseEntity<CuaHang>ThemCuaHang(@RequestBody CuaHang cuahang) {
 		try {
-			Optional<CuaHang> cuahangData = repo.TimUsername(cuahang.getUsername());
-			if(cuahangData.isPresent())
-			{
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-			else
-			{
-				CuaHang _cuahang = repo.save(new CuaHang(cuahang.getMach(), cuahang.getTench(),
+			CuaHang _cuahang = repo.save(new CuaHang(cuahang.getMach(), cuahang.getTench(),
 					cuahang.getSdt(), cuahang.getDiachi(), cuahang.getHinhanh(),
 					cuahang.getUsername(), cuahang.getPassword(), cuahang.getMakv(), cuahang.getMadt()));
 
-				return new ResponseEntity<>(_cuahang, HttpStatus.CREATED);
-			}
+			return new ResponseEntity<>(_cuahang, HttpStatus.CREATED);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

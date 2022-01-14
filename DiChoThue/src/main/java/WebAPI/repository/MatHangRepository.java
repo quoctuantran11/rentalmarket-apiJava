@@ -19,8 +19,7 @@ public interface MatHangRepository extends MongoRepository<MatHang, String> {
 			+ "'gia_ban' : 1, 'ma_cua_hang' : 1}")
 	List<MatHang> Xem();
 	
-	@Query(value="{mamh: ?0}", fields="{'ten_mat_hang' : 1, 'khoi_luong': 1, 'gia_ban': 1, 'hinh_anh': 1,"
-			+ "'mamh': 0}")
-	MatHang getTenMatHang(String id);
+	@Query(value="{mamh: ?0}", fields="{'ten_mat_hang' : 1, 'mamh': 0}")
+	Optional<MatHang> getTenMatHang(String id);
 }
 

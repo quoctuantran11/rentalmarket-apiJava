@@ -3,7 +3,7 @@ package WebAPI.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "ChiTietDonHang_Combo")
+@Document(collection = "ChiTietDonHangCombo")
 public class ChiTietDonHang_Combo {
 	@Id
 	private String madh;

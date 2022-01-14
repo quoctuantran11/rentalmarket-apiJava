@@ -6,22 +6,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import WebAPI.model.ChiTietDonHang_MatHang;
 import WebAPI.model.ChiTietGioHang;
 import WebAPI.model.ComboMatHang;
 import WebAPI.model.CuaHang;
 import WebAPI.model.DonHang;
 import WebAPI.model.GioHang;
 import WebAPI.model.KhachHang;
+import WebAPI.model.KhuVuc;
 import WebAPI.model.MatHang;
 import WebAPI.model.NhanVien;
-import WebAPI.repository.ChiTietGioHangRepository;
 import WebAPI.repository.ComboMatHangRepository;
 import WebAPI.repository.CuaHangRepository;
 import WebAPI.repository.DonHangRepository;
 import WebAPI.repository.GioHangRepository;
 import WebAPI.repository.KhachHangRepository;
+import WebAPI.repository.KhuVucRepository;
 import WebAPI.repository.MatHangRepository;
 import WebAPI.repository.NhanVienRepository;
+import WebAPI.repository.ChiTietGioHangRepository;
+import WebAPI.repository.ChiTietDonHang_MatHangRepository;
+
 
 @Service("AllData")
 public class AllDataServices {
@@ -47,7 +52,13 @@ public class AllDataServices {
 	GioHangRepository giohangrepo;
 	
 	@Autowired
-	ChiTietGioHangRepository ctgiorepo;
+	ChiTietGioHangRepository chitietgiohangrepo;
+	
+	@Autowired
+	ChiTietDonHang_MatHangRepository chitietdonhang_mathangrepo;
+	
+	@Autowired
+	KhuVucRepository khuvucrepo;
 	
 	public List<MatHang> LayTatCaHang()
 	{
@@ -62,6 +73,11 @@ public class AllDataServices {
 	public Optional<CuaHang> LayCuaHang(String id)
 	{
 		return cuahangrepo.getCuaHang(id);
+	}
+	
+	public List<CuaHang> ThongTinTatCaCuaHang()
+	{
+		return cuahangrepo.ThongTinTatCaCuaHang();
 	}
 	
 	public List<ComboMatHang> LayTatCaCombo()
@@ -79,14 +95,9 @@ public class AllDataServices {
 		return shipperrepo.getTenShippper(id);
 	}
 	
-	public MatHang TenMatHang(String id)
+	public Optional<MatHang> TenMatHang(String id)
 	{
 		return mathangrepo.getTenMatHang(id);
-	}
-	
-	public ComboMatHang TenCombo(String id)
-	{
-		return comborepo.getTenCombo(id);
 	}
 	
 	public List<DonHang> DanhSachGiaoHang(String id)
@@ -109,6 +120,11 @@ public class AllDataServices {
 		return khachhangrepo.TimTatCaTaiKhoan();
 	}
 	
+	public List<KhachHang> TatCaKhachHang()
+	{
+		return khachhangrepo.ThongTinTatCaKhachHang();
+	}
+	
 	public List<NhanVien> TaiKhoanNV()
 	{
 		return shipperrepo.TatCaTaiKhoan();
@@ -119,20 +135,74 @@ public class AllDataServices {
 		return cuahangrepo.DanhSachTaiKhoan();
 	}
 	
-	public GioHang LayGioHang(String id)
+	public List<GioHang> TatCaGioHang()
 	{
-		return giohangrepo.TimTheoIDKhach(id);
+		return giohangrepo.XemTatCaGioHang();
 	}
 	
-	public List<ChiTietGioHang> ChiTietGio(String id)
-	{
-		return ctgiorepo.TimTheoID(id);
+	public List<MatHang> XemTatCaMatHang() {
+		return mathangrepo.Xem();
 	}
 	
-	public ChiTietGioHang ChonHangHoa(String id, int soluong, String mahang, String macombo, String magio)
+	public List<GioHang> GioHangTheoID(String id) 
 	{
-		ChiTietGioHang _chitiet = ctgiorepo.save(new ChiTietGioHang(id, soluong, mahang, macombo, magio));
-		
-		return _chitiet;
+		return giohangrepo.TimTheoID(id);
 	}
+	
+	public List<GioHang> GioHangTheoMaKH(String id) 
+	{
+		return giohangrepo.TimTheoMaKH(id);
+	}
+	
+	public GioHang MotGioHangTheoMaKH(String id) 
+	{
+		return giohangrepo.MotGHTimTheoMaKH(id);
+	}
+	
+	public List<ChiTietGioHang> LayChiTietTheoGioHang(String id) 
+	{
+		return chitietgiohangrepo.TimTheoMaGioHang(id);
+	}
+	
+	public KhuVuc LayKhuVucTheoID(String id) 
+	{
+		return khuvucrepo.KhuVucTheoID(id);
+	}
+	
+	public List<KhuVuc> DanhSachToanBoKhuVuc() {
+		return khuvucrepo.DanhSachToanBoKhuVuc();
+	}
+	
+	public String LayPhanVung(KhuVuc a)
+	{
+		return a.getPhan_vung();
+	}
+	
+	public List<NhanVien> ThongTinTatCaShipper() 
+	{
+		return shipperrepo.ThongTinTatCaShipper();
+	}
+	
+	public List<NhanVien> LayNhanVienTheoMaKhuVuc(String makhuvuc)
+	{
+		return shipperrepo.LayNhanVienTheoMaKhuVuc(makhuvuc);
+	}
+	
+	public List<CuaHang> DanhSachCuaHangTheoKhuVuc(String makhuvuc) {
+		return cuahangrepo.DanhSachCuaHangTheoKhuVuc(makhuvuc);
+	}
+	
+	public List<ChiTietDonHang_MatHang> TatCaCTDH_MH() 
+	{
+		return chitietdonhang_mathangrepo.TatCaCTDH_MH();
+	}
+	
+	public List<KhachHang> TimKhachHangTheoMaKhuVuc(String makhuvuc) {
+		return khachhangrepo.TimKhachHangTheoMaKhuVuc(makhuvuc);
+	}
+	
+	public List<ChiTietDonHang_MatHang> DanhSachMatHangTheoMaMatHang(String mamh) {
+		return chitietdonhang_mathangrepo.DanhSachMatHangTheoMaMatHang(mamh);
+	}
+	
 }

@@ -3,42 +3,52 @@ package WebAPI.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "ChiTietDonHang_MatHang")
+@Document(collection = "ChiTietDonHangMatHang")
 public class ChiTietDonHang_MatHang {
 	@Id
-	private String madh;
-	private String mamh;
-	private int soluong;
+	private String id;
+	private String ma_don_hang;
+	private int so_luong;
+	private String ma_mat_hang;
 	
-	public String getMadh() {
-		return madh;
+	public String getID() {
+		return id;
 	}
 	
-	public void setMacombo(String madh) {
-		this.madh = madh;
+	public void setID(String id) {
+		this.id = id;
 	}
 	
-	public String getMamh() {
-		return mamh;
+	public String getMa_don_hang() {
+		return ma_don_hang;
 	}
 	
-	public void setMamh(String mamh) {
-		this.mamh = mamh;
+	public void setMa_don_hang(String madh) {
+		this.ma_don_hang = madh;
 	}
 	
-	public int getSoluong() {
-		return soluong;
+	public String getMa_mat_hang() {
+		return ma_mat_hang;
 	}
 	
-	public void setSoluong(int soluong) {
-		this.soluong = soluong;
+	public void setMa_mat_hang(String mamh) {
+		this.ma_mat_hang = mamh;
 	}
 	
-	public ChiTietDonHang_MatHang(String madh, String mamh, int soluong) {
+	public int getSo_luong() {
+		return so_luong;
+	}
+	
+	public void setSo_luong(int soluong) {
+		this.so_luong = soluong;
+	}
+	
+	public ChiTietDonHang_MatHang(String id, String madh, String mamh, int soluong) {
 		super();
-		this.madh = madh;
-		this.mamh = mamh;
-		this.soluong = soluong;
+		this.id = id;
+		this.ma_don_hang = madh;
+		this.ma_mat_hang = mamh;
+		this.so_luong = soluong;
 	}
 	
 	public ChiTietDonHang_MatHang() {
