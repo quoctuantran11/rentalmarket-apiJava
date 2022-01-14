@@ -13,7 +13,7 @@ public interface KhachHangRepository extends MongoRepository<KhachHang, String> 
 	@Query("{username: ?0}")
 	Optional<KhachHang> TimUsername(String username);
 	@Query(value="{password: ?0}", fields="{'sdt': 1, 'cccd': 1, 'gioi_tinh': 1, 'ngay_sinh': 1,"
-			+ "'ten_khach_hang': 1, 'dia_chi': 1, 'id': 0}")
+			+ "'ten_khach_hang': 1, 'dia_chi': 1}")
 	Optional<KhachHang> TimTaiKhoan(String password);
 	
 	@Query(value="{}", fields="{'username' : 1}")
