@@ -17,18 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import WebAPI.model.ChiTietGioHang;
 import WebAPI.model.ComboMatHang;
 import WebAPI.model.NhanVien;
-import WebAPI.repository.ChiTietComboRepository;
-import WebAPI.repository.ChiTietGioHangRepository;
 import WebAPI.model.CuaHang;
-import WebAPI.model.DoiTac;
 import WebAPI.model.DonHang;
 import WebAPI.model.GioHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.MatHang;
-import WebAPI.model.ChiTietCombo;
-import WebAPI.model.ChiTietGioHang;
 import WebAPI.services.AllDataServices;
 
 @CrossOrigin(origins = "http://localhost:8000")
@@ -207,23 +203,46 @@ public class AllDataController {
 		}
 	}
 	
-	
-	
-	@Autowired
-	ChiTietGioHangRepository giohangrepo;
-	@PostMapping("/them/{makh}")
-	public ResponseEntity<ChiTietGioHang> ThemSanPhamVaoChiTiet(@PathVariable("makh") String makh, 
-			@RequestBody ChiTietGioHang chitiet) {
+	@GetMapping("/giohang/{id}")
+	public ResponseEntity<List<Map<String, Object>>> GioHangTheoID(@PathVariable("id") String id)
+	{
 		try {
-			GioHang giohang = allData.MotGioHangTheoMaKH(makh);
-			String magh = giohang.getId();
-
+			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
+			GioHang giohang = allData.LayGioHang(id);
+			List<ChiTietGioHang> chitietlst = allData.ChiTietGio(giohang.getId());
+			int total = 0;
+			chitietlst.forEach(chitiet -> {
+				Map<String, Object> item = new HashMap();
+				item.put("ChiTiet", chitiet);
+				MatHang tenmathang = allData.TenMatHang(chitiet.getMa_mat_hang());
+				item.put("MatHang", tenmathang);
+				ComboMatHang tencombo = allData.TenCombo(chitiet.getMa_combo());
+				item.put("ComboMatHang", tencombo);
+				
+				itemlst.add(item);
+			});
 			
-			ChiTietGioHang _chitiet = giohangrepo.save(new ChiTietGioHang(chitiet.getMa_chi_tiet_gio_hang(),
-					magh, chitiet.getMa_mat_hang(), chitiet.getSo_luong()));
-
-			return new ResponseEntity<>(_chitiet, HttpStatus.CREATED);
-		} catch (Exception e) {
+			return new ResponseEntity<>(itemlst, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/chonhang/{id}")
+	public ResponseEntity<ChiTietGioHang> ChonHang(@PathVariable("id") String id, @RequestBody ChiTietGioHang ctgio)
+	{
+		try
+		{
+			GioHang giohangData = allData.LayGioHang(id);
+			ChiTietGioHang _ctgio = allData.ChonHangHoa(ctgio.getId(), ctgio.getSo_luong(),
+					ctgio.getMa_mat_hang(), ctgio.getMa_combo(), giohangData.getId());
+			
+			return new ResponseEntity<>(_ctgio, HttpStatus.CREATED);
+		}
+		catch (Exception e)
+		{
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

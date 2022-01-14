@@ -7,12 +7,8 @@ import org.springframework.data.mongodb.repository.Query;
 
 import WebAPI.model.ChiTietGioHang;
 
+public interface ChiTietGioHangRepository extends MongoRepository<ChiTietGioHang, String> {
 
-public interface ChiTietGioHangRepository extends MongoRepository<ChiTietGioHang, String>{
-	
-	@Query(value="{ma_gio_hang: ?0}")
-	List<ChiTietGioHang> TimTheoMaGioHang(String ma_gio_hang);
-	
-	
-
+	@Query("{ma_gio_hang:?0}")
+	List<ChiTietGioHang> TimTheoID(String id);
 }

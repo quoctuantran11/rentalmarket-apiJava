@@ -14,6 +14,7 @@ import WebAPI.model.GioHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.MatHang;
 import WebAPI.model.NhanVien;
+import WebAPI.repository.ChiTietGioHangRepository;
 import WebAPI.repository.ComboMatHangRepository;
 import WebAPI.repository.CuaHangRepository;
 import WebAPI.repository.DonHangRepository;
@@ -21,8 +22,6 @@ import WebAPI.repository.GioHangRepository;
 import WebAPI.repository.KhachHangRepository;
 import WebAPI.repository.MatHangRepository;
 import WebAPI.repository.NhanVienRepository;
-import WebAPI.repository.ChiTietGioHangRepository;
-
 
 @Service("AllData")
 public class AllDataServices {
@@ -48,7 +47,7 @@ public class AllDataServices {
 	GioHangRepository giohangrepo;
 	
 	@Autowired
-	ChiTietGioHangRepository chitietgiohangrepo;
+	ChiTietGioHangRepository ctgiorepo;
 	
 	public List<MatHang> LayTatCaHang()
 	{
@@ -80,9 +79,14 @@ public class AllDataServices {
 		return shipperrepo.getTenShippper(id);
 	}
 	
-	public Optional<MatHang> TenMatHang(String id)
+	public MatHang TenMatHang(String id)
 	{
 		return mathangrepo.getTenMatHang(id);
+	}
+	
+	public ComboMatHang TenCombo(String id)
+	{
+		return comborepo.getTenCombo(id);
 	}
 	
 	public List<DonHang> DanhSachGiaoHang(String id)
@@ -115,29 +119,20 @@ public class AllDataServices {
 		return cuahangrepo.DanhSachTaiKhoan();
 	}
 	
-	public List<GioHang> TatCaGioHang()
+	public GioHang LayGioHang(String id)
 	{
-		return giohangrepo.XemTatCaGioHang();
+		return giohangrepo.TimTheoIDKhach(id);
 	}
 	
-	public List<GioHang> GioHangTheoID(String id) 
+	public List<ChiTietGioHang> ChiTietGio(String id)
 	{
-		return giohangrepo.TimTheoID(id);
+		return ctgiorepo.TimTheoID(id);
 	}
 	
-	public List<GioHang> GioHangTheoMaKH(String id) 
+	public ChiTietGioHang ChonHangHoa(String id, int soluong, String mahang, String macombo, String magio)
 	{
-		return giohangrepo.TimTheoMaKH(id);
+		ChiTietGioHang _chitiet = ctgiorepo.save(new ChiTietGioHang(id, soluong, mahang, macombo, magio));
+		
+		return _chitiet;
 	}
-	
-	public GioHang MotGioHangTheoMaKH(String id) 
-	{
-		return giohangrepo.MotGHTimTheoMaKH(id);
-	}
-	
-	public List<ChiTietGioHang> LayChiTietTheoGioHang(String id) 
-	{
-		return chitietgiohangrepo.TimTheoMaGioHang(id);
-	}
-	
 }
