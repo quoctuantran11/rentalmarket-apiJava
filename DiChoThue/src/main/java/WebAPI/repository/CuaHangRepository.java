@@ -15,14 +15,11 @@ public interface CuaHangRepository extends MongoRepository<CuaHang, String> {
 	
 	@Query("{username: ?0}")
 	Optional<CuaHang> TimUsername(String username);
-	@Query(value="{password: ?0}", fields="{'sdt': 1, 'ten_cua_hang': 1, 'dia_chi': 1, 'hinh_anh': 1, 'id': 0}")
+	@Query(value="{password: ?0}", fields="{'sdt': 1, 'ten_cua_hang': 1, 'dia_chi': 1, 'hinh_anh': 1, 'mach': 0}")
 	Optional<CuaHang> TimTaiKhoan(String password);
 	
 	@Query(value="{}", fields="{'username' : 1}")
 	List<CuaHang> DanhSachTaiKhoan();
-	
-	@Query(value="{}")
-	List<CuaHang> ThongTinTatCaCuaHang();
 	
 	@Query(value="{ma_khu_vuc: ?0}", fields = "{'mach': 1, 'ten_cua_hang': 1}")
 	List<CuaHang> DanhSachCuaHangTheoKhuVuc(String ma_khu_vuc);

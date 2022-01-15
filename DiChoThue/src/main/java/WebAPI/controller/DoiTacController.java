@@ -57,6 +57,17 @@ public class DoiTacController {
 		}
 	}
 	
+	@DeleteMapping("/xoa/{id}")
+	public ResponseEntity<HttpStatus> XoaMotDoiTac(@PathVariable("id") String id) {
+		try {
+			repo.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	//Delete
 	@DeleteMapping("/xoatatca")
 	public ResponseEntity<HttpStatus> DeleteAllAccounts() {

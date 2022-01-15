@@ -14,7 +14,7 @@ public class DoiTac {
 	private String dia_chi;
 	private String loai_doi_tac;
 	private String ten_doi_tac;
-	private Date ngay_tham_gia;
+	private String ngay_tham_gia;
 	private int so_luong_cua_hang;
 	private String trang_thai;
 	
@@ -66,11 +66,11 @@ public class DoiTac {
 		this.ten_doi_tac = tendoitac;
 	}
 	
-	public Date getNgaythamgia() {
+	public String getNgaythamgia() {
 		return ngay_tham_gia;
 	}
 	
-	public void setNgaythamgia(Date ngaythamgia) {
+	public void setNgaythamgia(String ngaythamgia) {
 		this.ngay_tham_gia = ngaythamgia;
 	}
 	
@@ -91,7 +91,7 @@ public class DoiTac {
 	}
 	
 	public DoiTac(String id, String sdt, String cccd, String dia_chi, String loaidoitac, String tendoitac,
-	Date ngaythamgia, int soluong, String trangthai) {
+	String ngaythamgia, int soluong, String trangthai) {
 		super();
 		this.id = id;
 		this.sdt = sdt;
