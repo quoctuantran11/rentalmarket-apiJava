@@ -7,15 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import WebAPI.model.ChiTietDonHang_MatHang;
 
-
-
-public interface ChiTietDonHang_MatHangRepository extends MongoRepository<ChiTietDonHang_MatHang, String>{
-	
-	@Query(value="{}")
-	List<ChiTietDonHang_MatHang> TatCaCTDH_MH();
-	
-
+public interface ChiTietDonHang_MatHangRepository extends MongoRepository<ChiTietDonHang_MatHang, String> {
 	@Query(value="{ma_mat_hang: ?0}")
 	List<ChiTietDonHang_MatHang> DanhSachMatHangTheoMaMatHang(String ma_mat_hang);
-
 }

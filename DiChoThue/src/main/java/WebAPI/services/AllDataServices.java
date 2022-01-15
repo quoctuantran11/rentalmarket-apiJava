@@ -16,6 +16,8 @@ import WebAPI.model.KhachHang;
 import WebAPI.model.KhuVuc;
 import WebAPI.model.MatHang;
 import WebAPI.model.NhanVien;
+import WebAPI.repository.ChiTietDonHang_MatHangRepository;
+import WebAPI.repository.ChiTietGioHangRepository;
 import WebAPI.repository.ComboMatHangRepository;
 import WebAPI.repository.CuaHangRepository;
 import WebAPI.repository.DonHangRepository;
@@ -24,9 +26,6 @@ import WebAPI.repository.KhachHangRepository;
 import WebAPI.repository.KhuVucRepository;
 import WebAPI.repository.MatHangRepository;
 import WebAPI.repository.NhanVienRepository;
-import WebAPI.repository.ChiTietGioHangRepository;
-import WebAPI.repository.ChiTietDonHang_MatHangRepository;
-
 
 @Service("AllData")
 public class AllDataServices {
@@ -52,7 +51,7 @@ public class AllDataServices {
 	GioHangRepository giohangrepo;
 	
 	@Autowired
-	ChiTietGioHangRepository chitietgiohangrepo;
+	ChiTietGioHangRepository ctgiorepo;
 	
 	@Autowired
 	ChiTietDonHang_MatHangRepository chitietdonhang_mathangrepo;
@@ -75,11 +74,6 @@ public class AllDataServices {
 		return cuahangrepo.getCuaHang(id);
 	}
 	
-	public List<CuaHang> ThongTinTatCaCuaHang()
-	{
-		return cuahangrepo.ThongTinTatCaCuaHang();
-	}
-	
 	public List<ComboMatHang> LayTatCaCombo()
 	{
 		return comborepo.findAll();
@@ -95,9 +89,14 @@ public class AllDataServices {
 		return shipperrepo.getTenShippper(id);
 	}
 	
-	public Optional<MatHang> TenMatHang(String id)
+	public MatHang TenMatHang(String id)
 	{
 		return mathangrepo.getTenMatHang(id);
+	}
+	
+	public ComboMatHang TenCombo(String id)
+	{
+		return comborepo.getTenCombo(id);
 	}
 	
 	public List<DonHang> DanhSachGiaoHang(String id)
@@ -120,11 +119,6 @@ public class AllDataServices {
 		return khachhangrepo.TimTatCaTaiKhoan();
 	}
 	
-	public List<KhachHang> TatCaKhachHang()
-	{
-		return khachhangrepo.ThongTinTatCaKhachHang();
-	}
-	
 	public List<NhanVien> TaiKhoanNV()
 	{
 		return shipperrepo.TatCaTaiKhoan();
@@ -135,33 +129,21 @@ public class AllDataServices {
 		return cuahangrepo.DanhSachTaiKhoan();
 	}
 	
-	public List<GioHang> TatCaGioHang()
+	public GioHang LayGioHang(String id)
 	{
-		return giohangrepo.XemTatCaGioHang();
+		return giohangrepo.TimTheoIDKhach(id);
 	}
 	
-	public List<MatHang> XemTatCaMatHang() {
-		return mathangrepo.Xem();
+	public List<ChiTietGioHang> ChiTietGio(String id)
+	{
+		return ctgiorepo.TimTheoID(id);
 	}
 	
-	public List<GioHang> GioHangTheoID(String id) 
+	public ChiTietGioHang ChonHangHoa(String id, int soluong, String mahang, String macombo, String magio)
 	{
-		return giohangrepo.TimTheoID(id);
-	}
-	
-	public List<GioHang> GioHangTheoMaKH(String id) 
-	{
-		return giohangrepo.TimTheoMaKH(id);
-	}
-	
-	public GioHang MotGioHangTheoMaKH(String id) 
-	{
-		return giohangrepo.MotGHTimTheoMaKH(id);
-	}
-	
-	public List<ChiTietGioHang> LayChiTietTheoGioHang(String id) 
-	{
-		return chitietgiohangrepo.TimTheoMaGioHang(id);
+		ChiTietGioHang _chitiet = ctgiorepo.save(new ChiTietGioHang(id, soluong, mahang, macombo, magio));
+		
+		return _chitiet;
 	}
 	
 	public KhuVuc LayKhuVucTheoID(String id) 
@@ -170,17 +152,12 @@ public class AllDataServices {
 	}
 	
 	public List<KhuVuc> DanhSachToanBoKhuVuc() {
-		return khuvucrepo.DanhSachToanBoKhuVuc();
-	}
-	
-	public String LayPhanVung(KhuVuc a)
-	{
-		return a.getPhan_vung();
+		return khuvucrepo.findAll();
 	}
 	
 	public List<NhanVien> ThongTinTatCaShipper() 
 	{
-		return shipperrepo.ThongTinTatCaShipper();
+		return shipperrepo.findAll();
 	}
 	
 	public List<NhanVien> LayNhanVienTheoMaKhuVuc(String makhuvuc)
@@ -194,7 +171,7 @@ public class AllDataServices {
 	
 	public List<ChiTietDonHang_MatHang> TatCaCTDH_MH() 
 	{
-		return chitietdonhang_mathangrepo.TatCaCTDH_MH();
+		return chitietdonhang_mathangrepo.findAll();
 	}
 	
 	public List<KhachHang> TimKhachHangTheoMaKhuVuc(String makhuvuc) {
@@ -204,5 +181,4 @@ public class AllDataServices {
 	public List<ChiTietDonHang_MatHang> DanhSachMatHangTheoMaMatHang(String mamh) {
 		return chitietdonhang_mathangrepo.DanhSachMatHangTheoMaMatHang(mamh);
 	}
-	
 }

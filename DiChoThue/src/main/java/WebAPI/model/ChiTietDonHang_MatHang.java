@@ -7,48 +7,47 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ChiTietDonHang_MatHang {
 	@Id
 	private String id;
-	private String ma_don_hang;
-	private int so_luong;
-	private String ma_mat_hang;
+	private String madh;
+	private String mamh;
+	private int soluong;
 	
-	public String getID() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setID(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
-	public String getMa_don_hang() {
-		return ma_don_hang;
+	public String getMadh() {
+		return madh;
 	}
 	
-	public void setMa_don_hang(String madh) {
-		this.ma_don_hang = madh;
+	public void setMacombo(String madh) {
+		this.madh = madh;
 	}
 	
-	public String getMa_mat_hang() {
-		return ma_mat_hang;
+	public String getMamh() {
+		return mamh;
 	}
 	
-	public void setMa_mat_hang(String mamh) {
-		this.ma_mat_hang = mamh;
+	public void setMamh(String mamh) {
+		this.mamh = mamh;
 	}
 	
-	public int getSo_luong() {
-		return so_luong;
+	public int getSoluong() {
+		return soluong;
 	}
 	
-	public void setSo_luong(int soluong) {
-		this.so_luong = soluong;
+	public void setSoluong(int soluong) {
+		this.soluong = soluong;
 	}
 	
-	public ChiTietDonHang_MatHang(String id, String madh, String mamh, int soluong) {
+	public ChiTietDonHang_MatHang(String madh, String mamh, int soluong) {
 		super();
-		this.id = id;
-		this.ma_don_hang = madh;
-		this.ma_mat_hang = mamh;
-		this.so_luong = soluong;
+		this.madh = madh;
+		this.mamh = mamh;
+		this.soluong = soluong;
 	}
 	
 	public ChiTietDonHang_MatHang() {

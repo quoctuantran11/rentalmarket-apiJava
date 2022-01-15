@@ -6,9 +6,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ChiTietDonHangCombo")
 public class ChiTietDonHang_Combo {
 	@Id
+	private String id;
 	private String madh;
 	private String macombo;
 	private int soluong;
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getMacombo() {
 		return macombo;
