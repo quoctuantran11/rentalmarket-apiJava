@@ -23,6 +23,6 @@ public interface NhanVienRepository extends MongoRepository<NhanVien, String> {
 	@Query(value="{id: ?0}", fields="{'ten_nhan_vien': 1, 'id': 0}")
 	Optional<NhanVien> getTenShippper(String id);
 	
-	@Query(value="{khu_vuc_giao_hang: ?0}", fields="{'ten_nhan_vien': 1, 'id': 1}")
+	@Query("{khu_vuc_giao_hang: ?0}")
 	List<NhanVien> LayNhanVienTheoMaKhuVuc(String id);
 }

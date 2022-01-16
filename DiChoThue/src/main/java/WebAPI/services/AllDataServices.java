@@ -119,6 +119,11 @@ public class AllDataServices {
 		return donhangrepo.findAll();
 	}
 	
+	public List<DonHang> TatCaDonMoi()
+	{
+		return donhangrepo.DonHangMoi();
+	}
+	
 	public List<KhachHang> TaiKhoanKH()
 	{
 		return khachhangrepo.TimTatCaTaiKhoan();
@@ -149,6 +154,12 @@ public class AllDataServices {
 		ChiTietGioHang _chitiet = ctgiorepo.save(new ChiTietGioHang(id, soluong, mahang, macombo, magio));
 		
 		return _chitiet;
+	}
+	
+	public void XoaHangTrongGio(String id)
+	{
+		ChiTietGioHang _ctgio = ctgiorepo.TimTheoIDHang(id);
+		ctgiorepo.deleteById(_ctgio.getId());
 	}
 	
 	public KhuVuc LayKhuVucTheoID(String id) 
@@ -194,5 +205,4 @@ public class AllDataServices {
 	public List<TienHoaHong> TinhTHH_All() {
 		return tienhoahongrepo.findAll();
 	}
-
 }

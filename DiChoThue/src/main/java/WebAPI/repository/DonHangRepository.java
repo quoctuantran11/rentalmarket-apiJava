@@ -14,4 +14,7 @@ public interface DonHangRepository extends MongoRepository<DonHang, String> {
 	
 	@Query("{'ma_shipper': ?0, $or: [{'tinh_trang': 'Đã hoàn tất'}, {'tinh_trang': 'Bị hủy'}]}")
     List<DonHang>LichSuGiaoHang(String id);
+	
+	@Query("{'tinh_trang': 'Đang Được Xử Lý'}")
+    List<DonHang>DonHangMoi();
 }

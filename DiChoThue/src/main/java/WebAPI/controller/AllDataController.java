@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -206,6 +207,33 @@ public class AllDataController {
 		}
 	}
 	
+	@GetMapping("/donmoi")
+	public ResponseEntity<List<Map<String, Object>>> DanhSachDonMoi()
+	{
+		try {
+			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
+			List<DonHang> donhanglst = allData.TatCaDonMoi();
+			donhanglst.forEach(donhang -> {
+				Map<String, Object> item = new HashMap();
+				item.put("DonHang", donhang);
+				Optional<NhanVien> tenshipper = allData.TenShipper(donhang.getMashipper());
+				item.put("Shipper", tenshipper);
+				Optional<CuaHang> tencuahang = allData.LayCuaHang(donhang.getMach());
+				item.put("CuaHang", tencuahang);
+				Optional<KhachHang> tenkhachhang = allData.TenKhachHang(donhang.getMakh());
+				item.put("KhachHang", tenkhachhang);
+				
+				itemlst.add(item);
+			});
+			
+			return new ResponseEntity<>(itemlst, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@GetMapping("/giohang/{id}")
 	public ResponseEntity<List<Map<String, Object>>> GioHangTheoID(@PathVariable("id") String id)
 	{
@@ -250,18 +278,28 @@ public class AllDataController {
 		}
 	}
 	
+	@DeleteMapping("/gio/xoa/{id}")
+	public ResponseEntity<HttpStatus> XoaMotChiTietGioHang(@PathVariable("id") String id) {
+		try {
+			allData.XoaHangTrongGio(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	int  green , red ,  yellow;
 	@GetMapping("/thongkekhuvuckhachhang")
 	public ResponseEntity<Map<String, Object>> ThongKeKhuVuc_KhachHang()
 	{
-		
 		try {
 			green = 0; red = 0;  yellow =0;
+			Map<String, Object> itemMap = new HashMap();
 			Map<String, Object> ThongKe = new HashMap();
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 			List<KhuVuc> khuvuclst = allData.DanhSachToanBoKhuVuc();
 			khuvuclst.forEach(khuvuc -> {
-				
 				Map<String, Object> item = new HashMap();
 				item.put("KhuVuc", khuvuc);
 				List<KhachHang> khachhang = allData.TimKhachHangTheoMaKhuVuc(khuvuc.getID());
@@ -276,19 +314,18 @@ public class AllDataController {
 				else if(trangthaikhuvuc.equals("Cam")) {
 					yellow = yellow + khachhang.size();
 				}
-				
 							
 				itemlst.add(item);
 			});
-			
 			
 			ThongKe.put("Green", green);
 			ThongKe.put("Red", red);
 			ThongKe.put("Yellow", yellow);
 			
-			
+			itemMap.put("SoLieu", ThongKe);
+			itemMap.put("DuLieu", itemlst);
 
-			return new ResponseEntity<>(ThongKe, HttpStatus.OK);
+			return new ResponseEntity<>(itemMap, HttpStatus.OK);
 		}
 		catch (Exception e)
 		{
@@ -296,19 +333,15 @@ public class AllDataController {
 		}
 	}
 	
-	
-	
-	
 	@GetMapping("/thongkekhuvucshipper")
 	public ResponseEntity<Map<String, Object>> ThongKeKhuVuc_Shipper()
 	{
-		
 		try {
 			green = 0; red = 0;  yellow = 0;
+			Map<String, Object> itemMap = new HashMap();
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 			List<KhuVuc> khuvuclst = allData.DanhSachToanBoKhuVuc();
 			khuvuclst.forEach(khuvuc -> {
-				
 				Map<String, Object> item = new HashMap();
 				item.put("KhuVuc", khuvuc);
 				List<NhanVien> shipper = allData.LayNhanVienTheoMaKhuVuc(khuvuc.getID());
@@ -323,7 +356,6 @@ public class AllDataController {
 				else if(trangthaikhuvuc.equals("Cam")) {
 					yellow = yellow + shipper.size();
 				}
-				
 							
 				itemlst.add(item);
 			});
@@ -333,8 +365,10 @@ public class AllDataController {
 			item_ThongKe.put("Red", red);
 			item_ThongKe.put("Yellow", yellow);
 			
-
-			return new ResponseEntity<>(item_ThongKe, HttpStatus.OK);
+			itemMap.put("SoLieu", item_ThongKe);
+			itemMap.put("DuLieu", itemlst);
+			
+			return new ResponseEntity<>(itemMap, HttpStatus.OK);
 		}
 		catch (Exception e)
 		{
@@ -346,13 +380,12 @@ public class AllDataController {
 	@GetMapping("/thongkekhuvuccuahang")
 	public ResponseEntity<Map<String, Object>> ThongKeKhuVuc_CuaHang()
 	{
-		
 		try {
 			green = 0; red = 0;  yellow = 0;
+			Map<String, Object> itemMap = new HashMap();
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 			List<KhuVuc> khuvuclst = allData.DanhSachToanBoKhuVuc();
 			khuvuclst.forEach(khuvuc -> {
-				
 				Map<String, Object> item = new HashMap();
 				item.put("KhuVuc", khuvuc);
 				List<CuaHang> cuahang = allData.DanhSachCuaHangTheoKhuVuc(khuvuc.getID());
@@ -367,7 +400,6 @@ public class AllDataController {
 				else if(trangthaikhuvuc.equals("Cam")) {
 					yellow = yellow + cuahang.size();
 				}
-				
 							
 				itemlst.add(item);
 			});
@@ -377,16 +409,16 @@ public class AllDataController {
 			item_ThongKe.put("Red", red);
 			item_ThongKe.put("Yellow", yellow);
 			
+			itemMap.put("SoLieu", item_ThongKe);
+			itemMap.put("DuLieu", itemlst);
 
-			return new ResponseEntity<>(item_ThongKe, HttpStatus.OK);
+			return new ResponseEntity<>(itemMap, HttpStatus.OK);
 		}
 		catch (Exception e)
 		{
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-
 	
 	int tongsoluong;
 	@GetMapping("/thongkemathangthietyeu")
@@ -415,7 +447,6 @@ public class AllDataController {
 				itemlst.add(item);
 			});
 			
-			
 			return new ResponseEntity<>(itemlst_ThongKe, HttpStatus.OK);
 		}
 		catch (Exception e)
@@ -429,14 +460,14 @@ public class AllDataController {
 	{
 		try {
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
-		
+
 			List<TienHoaHong> hienhoahonglst = allData.TinhTHH_All();
 			hienhoahonglst.forEach(tienhoahong -> {
 				Map<String, Object> item = new HashMap();
 				item.put("TienHoaHong", tienhoahong);
 				Optional<CuaHang> tencuahang = allData.LayCuaHang(tienhoahong.getMa_cua_hang());
 				item.put("CuaHang", tencuahang);
-				
+
 				itemlst.add(item);
 			});
 			return new ResponseEntity<>(itemlst, HttpStatus.OK);

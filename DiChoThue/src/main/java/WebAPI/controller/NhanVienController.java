@@ -92,6 +92,17 @@ public class NhanVienController {
 			}
 		}
 		
+		@DeleteMapping("/xoa/{id}")
+		public ResponseEntity<HttpStatus> XoaMotKhachHang(@PathVariable("id") String id) {
+			try {
+				repo.deleteById(id);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
 		@PutMapping("/edit/{id}")
 		public ResponseEntity<NhanVien> CapNhatThongTin(@PathVariable("id") String id, @RequestBody NhanVien
 		nhanvien) {

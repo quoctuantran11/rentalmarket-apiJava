@@ -11,4 +11,7 @@ public interface ChiTietGioHangRepository extends MongoRepository<ChiTietGioHang
 
 	@Query("{ma_gio_hang:?0}")
 	List<ChiTietGioHang> TimTheoID(String id);
+	
+	@Query("{$or: [{'ma_mat_hang': ?0}, {'ma_combo': ?0}]}")
+	ChiTietGioHang TimTheoIDHang(String id);
 }

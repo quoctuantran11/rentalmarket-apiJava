@@ -85,11 +85,11 @@ public class MatHangController {
 		}
 	}
 	
-	@GetMapping()
-	public ResponseEntity<List<MatHang>> XemTatCaMatHang() {
+	@GetMapping("/tai/{id}")
+	public ResponseEntity<List<MatHang>> XemTatCaMatHang(@PathVariable("id") String id) {
 		try {
 			List<MatHang> mathanglst = new ArrayList<MatHang>();
-			repo.findAll().forEach(mathanglst::add);
+			repo.DanhSachTaiCuaHang(id).forEach(mathanglst::add);
 			if (mathanglst.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
