@@ -408,11 +408,13 @@ public class AllDataController {
 				});
 				
 				Map<String, Object> item_ThongKe = new HashMap();
-				item_ThongKe.put(mathang.getTen(), tongsoluong);
+				item_ThongKe.put("TenMatHang", mathang.getTen());
+				item_ThongKe.put("SoLuong", tongsoluong);
 				itemlst_ThongKe.add(item_ThongKe);
 				
 				itemlst.add(item);
 			});
+			
 			
 			return new ResponseEntity<>(itemlst_ThongKe, HttpStatus.OK);
 		}
@@ -422,13 +424,13 @@ public class AllDataController {
 		}
 	}
 	
-	@GetMapping("/tienhoahong/{thang_nam}")
-	public ResponseEntity<List<Map<String, Object>>> TienHoaHong(@PathVariable("thang_nam") String thang_nam)
+	@GetMapping("/tienhoahong")
+	public ResponseEntity<List<Map<String, Object>>> TienHoaHong()
 	{
 		try {
 			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
 		
-			List<TienHoaHong> hienhoahonglst = allData.TinhTHHTheoThangNam(thang_nam);
+			List<TienHoaHong> hienhoahonglst = allData.TinhTHH_All();
 			hienhoahonglst.forEach(tienhoahong -> {
 				Map<String, Object> item = new HashMap();
 				item.put("TienHoaHong", tienhoahong);

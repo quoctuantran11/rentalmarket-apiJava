@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ChiTietDonHang_Combo {
 	@Id
 	private String id;
-	private String madh;
-	private String macombo;
-	private int soluong;
+	private String ma_don_hang;
+	private String ma_combo;
+	private int so_luong;
 	
 	public String getId() {
 		return id;
@@ -20,34 +20,35 @@ public class ChiTietDonHang_Combo {
 	}
 	
 	public String getMacombo() {
-		return macombo;
+		return ma_combo;
 	}
 	
 	public void setMacombo(String macombo) {
-		this.macombo = macombo;
+		this.ma_combo = macombo;
 	}
 	
 	public String getMadh() {
-		return madh;
+		return ma_don_hang;
 	}
 	
 	public void setMadh(String madh) {
-		this.madh = madh;
+		this.ma_don_hang = madh;
 	}
 	
 	public int getSoluong() {
-		return soluong;
+		return so_luong;
 	}
 	
 	public void setSoluong(int soluong) {
-		this.soluong = soluong;
+		this.so_luong = soluong;
 	}
 	
-	public ChiTietDonHang_Combo(String macombo, String madh, int soluong) {
+	public ChiTietDonHang_Combo(String id, String macombo, String madh, int soluong) {
 		super();
-		this.macombo = macombo;
-		this.madh = madh;
-		this.soluong = soluong;
+		this.id = id;
+		this.ma_combo = macombo;
+		this.ma_don_hang = madh;
+		this.so_luong = soluong;
 	}
 	
 	public ChiTietDonHang_Combo() {

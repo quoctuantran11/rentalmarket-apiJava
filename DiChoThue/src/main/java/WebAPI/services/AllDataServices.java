@@ -191,5 +191,8 @@ public class AllDataServices {
 		return tienhoahongrepo.TinhTHHTheoThangNam(thang_nam);
 	}
 	
+	public List<TienHoaHong> TinhTHH_All() {
+		return tienhoahongrepo.findAll();
+	}
 
 }
