@@ -27,6 +27,7 @@ import WebAPI.model.GioHang;
 import WebAPI.model.KhachHang;
 import WebAPI.model.KhuVuc;
 import WebAPI.model.MatHang;
+import WebAPI.model.TienHoaHong;
 import WebAPI.services.AllDataServices;
 
 @CrossOrigin(origins = "http://localhost:8000")
@@ -414,6 +415,29 @@ public class AllDataController {
 			});
 			
 			return new ResponseEntity<>(itemlst_ThongKe, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/tienhoahong/{thang_nam}")
+	public ResponseEntity<List<Map<String, Object>>> TienHoaHong(@PathVariable("thang_nam") String thang_nam)
+	{
+		try {
+			List<Map<String, Object>> itemlst = new ArrayList<Map<String, Object>>();
+		
+			List<TienHoaHong> hienhoahonglst = allData.TinhTHHTheoThangNam(thang_nam);
+			hienhoahonglst.forEach(tienhoahong -> {
+				Map<String, Object> item = new HashMap();
+				item.put("TienHoaHong", tienhoahong);
+				Optional<CuaHang> tencuahang = allData.LayCuaHang(tienhoahong.getMa_cua_hang());
+				item.put("CuaHang", tencuahang);
+				
+				itemlst.add(item);
+			});
+			return new ResponseEntity<>(itemlst, HttpStatus.OK);
 		}
 		catch (Exception e)
 		{

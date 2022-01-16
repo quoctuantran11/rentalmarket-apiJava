@@ -16,6 +16,7 @@ import WebAPI.model.KhachHang;
 import WebAPI.model.KhuVuc;
 import WebAPI.model.MatHang;
 import WebAPI.model.NhanVien;
+import WebAPI.model.TienHoaHong;
 import WebAPI.repository.ChiTietDonHang_MatHangRepository;
 import WebAPI.repository.ChiTietGioHangRepository;
 import WebAPI.repository.ComboMatHangRepository;
@@ -26,6 +27,7 @@ import WebAPI.repository.KhachHangRepository;
 import WebAPI.repository.KhuVucRepository;
 import WebAPI.repository.MatHangRepository;
 import WebAPI.repository.NhanVienRepository;
+import WebAPI.repository.TienHoaHongRepository;
 
 @Service("AllData")
 public class AllDataServices {
@@ -58,6 +60,9 @@ public class AllDataServices {
 	
 	@Autowired
 	KhuVucRepository khuvucrepo;
+	
+	@Autowired
+	TienHoaHongRepository tienhoahongrepo;
 	
 	public List<MatHang> LayTatCaHang()
 	{
@@ -181,4 +186,10 @@ public class AllDataServices {
 	public List<ChiTietDonHang_MatHang> DanhSachMatHangTheoMaMatHang(String mamh) {
 		return chitietdonhang_mathangrepo.DanhSachMatHangTheoMaMatHang(mamh);
 	}
+	
+	public List<TienHoaHong> TinhTHHTheoThangNam(String thang_nam) {
+		return tienhoahongrepo.TinhTHHTheoThangNam(thang_nam);
+	}
+	
+
 }
