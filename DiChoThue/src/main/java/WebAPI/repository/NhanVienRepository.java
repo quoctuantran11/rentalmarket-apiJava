@@ -14,7 +14,7 @@ public interface NhanVienRepository extends MongoRepository<NhanVien, String> {
 	Optional<NhanVien> TimUsername(String username);
 	@Query(value="{password: ?0}", fields="{'sdt': 1, 'cccd': 1, 'gioi_tinh': 1, 'ngay_sinh': 1,"
 			+ "'ten_nhan_vien': 1, 'dia_chi': 1, 'trang_thai_tiem_chung': 1,"
-			+ "'khu_vuc_giao_hang': 1,'id': 0}")
+			+ "'khu_vuc_giao_hang': 1}")
 	Optional<NhanVien> TimTaiKhoan(String password);
 	
 	@Query(value="{}", fields="{'username' : 1}")

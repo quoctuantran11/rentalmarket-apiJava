@@ -11,6 +11,7 @@ public class DonHang {
 	private String hinh_thuc_thanh_toan;
 	private int tong_tien;
 	private String dia_chi;
+	private String ngay_dat;
 	private String ma_khach_hang;
 	private String ma_cua_hang;
 	private String ma_shipper;
@@ -55,6 +56,14 @@ public class DonHang {
 		this.dia_chi = diachi;
 	}
 	
+	public String getNgaydat() {
+		return ngay_dat;
+	}
+	
+	public void setNgaydat(String ngay) {
+		this.ngay_dat = ngay;
+	}
+	
 	public String getMakh() {
 		return ma_khach_hang;
 	}
@@ -80,13 +89,14 @@ public class DonHang {
 	}
 	
 	public DonHang(String madh, String tinhtrangdon, String hinhthucthanhtoan, int tongtien, 
-			String diachi, String makh, String mach, String mashipper) {
+			String diachi, String ngay, String makh, String mach, String mashipper) {
 		super();
 		this.madh = madh;
 		this.tinh_trang = tinhtrangdon;
 		this.hinh_thuc_thanh_toan = hinhthucthanhtoan;
 		this.tong_tien = tongtien;
 		this.dia_chi = diachi;
+		this.ngay_dat = ngay;
 		this.ma_khach_hang = makh;
 		this.ma_cua_hang = mach;
 		this.ma_shipper = mashipper;
