@@ -22,6 +22,6 @@ public interface KhachHangRepository extends MongoRepository<KhachHang, String> 
 	@Query(value="{id:?0}", fields="{'ten_khach_hang': 1, '_id': 0}")
 	Optional<KhachHang> getTenKhachHang(String makh);
 	
-	@Query(value="{ma_khu_vuc: ?0}", fields="{'ten_khach_hang': 1, 'id': 1}")
+	@Query("{ma_khu_vuc: ?0}")
 	List<KhachHang> TimKhachHangTheoMaKhuVuc(String ma_khu_vuc);
 }

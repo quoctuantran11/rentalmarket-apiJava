@@ -10,7 +10,7 @@ import WebAPI.model.CuaHang;
 
 public interface CuaHangRepository extends MongoRepository<CuaHang, String> {
 	// CRUD
-	@Query(value="{mach:?0}", fields="{'ten_cua_hang': 1, 'dia_chi': 1, '_id': 0}")
+	@Query(value="{mach:?0}", fields="{'ten_cua_hang': 1, 'dia_chi': 1}")
 	Optional<CuaHang> getCuaHang(String mach);
 	
 	@Query("{username: ?0}")
@@ -21,6 +21,6 @@ public interface CuaHangRepository extends MongoRepository<CuaHang, String> {
 	@Query(value="{}", fields="{'username' : 1}")
 	List<CuaHang> DanhSachTaiKhoan();
 	
-	@Query(value="{ma_khu_vuc: ?0}", fields = "{'mach': 1, 'ten_cua_hang': 1}")
+	@Query("{ma_khu_vuc: ?0}")
 	List<CuaHang> DanhSachCuaHangTheoKhuVuc(String ma_khu_vuc);
 }
