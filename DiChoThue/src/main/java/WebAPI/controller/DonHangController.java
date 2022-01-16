@@ -33,7 +33,7 @@ public class DonHangController {
 		try {
 			DonHang _donhang = repo.save(new DonHang(donhang.getMadh(), donhang.getTinhtrangdon(),
 					donhang.getHinhthucthanhtoan(), donhang.getTongtien(),
-					donhang.getDiachi(), donhang.getMakh(), donhang.getMach(), donhang.getMashipper()));
+					donhang.getDiachi(),donhang.getNgaydat(), donhang.getMakh(), donhang.getMach(), donhang.getMashipper()));
 
 			return new ResponseEntity<>(_donhang, HttpStatus.CREATED);
 		}
